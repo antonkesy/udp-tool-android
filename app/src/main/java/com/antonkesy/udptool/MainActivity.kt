@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.antonkesy.udptool.ui.screens.DetailScreen
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,6 +22,11 @@ class MainActivity : ComponentActivity() {
             MainView()
         }
     }
+    //TODO
+    //layout should be like keep
+    //add connection listening and save history
+    //history as bottom sheet to pull up and full screen
+    //top has info of settings
 }
 
 @Preview(showBackground = true)
@@ -32,9 +38,17 @@ fun DefaultPreview() {
 @Composable
 fun MainView() {
     UDPToolTheme {
-        Scaffold { innerPadding ->
-            CardList(paddingValues = innerPadding)
+        Scaffold(floatingActionButton = { AddUDPItemFloatBtn() }) { innerPadding ->
+            //CardList(paddingValues = innerPadding)
+            DetailScreen(modifier = Modifier.padding(innerPadding))
         }
+    }
+}
+
+@Composable
+fun AddUDPItemFloatBtn() {
+    FloatingActionButton(onClick = { /*TODO*/ }) {
+        Text(text = "Add")
     }
 }
 
