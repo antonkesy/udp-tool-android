@@ -3,6 +3,8 @@ package com.antonkesy.udptool
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,6 +23,8 @@ import androidx.compose.ui.unit.sp
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
 
 class MainActivity : ComponentActivity() {
+
+    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -29,12 +33,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalAnimationApi
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MainView()
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun MainView() {
     UDPToolTheme {
@@ -44,6 +50,7 @@ fun MainView() {
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun CardList(paddingValues: PaddingValues) {
     Column(
@@ -122,6 +129,7 @@ fun MessagesCardContent(label: String, modifier: Modifier) {
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun CardListCard(label: String, content: @Composable () -> Unit) {
     var isExtended by remember { mutableStateOf(true) }
@@ -135,9 +143,7 @@ fun CardListCard(label: String, content: @Composable () -> Unit) {
         elevation = 10.dp
     ) {
         Column {
-            if (isExtended) {
-                content()
-            }
+            AnimatedVisibility(visible = isExtended) { content() }
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -150,9 +156,7 @@ fun CardListCard(label: String, content: @Composable () -> Unit) {
                         .align(Alignment.CenterVertically)
                         .padding(start = 15.dp)
                 ) {
-                    if (!isExtended) {
-                        CardHeader(label)
-                    }
+                    AnimatedVisibility(visible = !isExtended) { CardHeader(label) }
                 }
                 IconButton(
                     onClick = { isExtended = !isExtended },
