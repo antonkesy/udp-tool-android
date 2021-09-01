@@ -12,9 +12,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
 
 class MainActivity : ComponentActivity() {
@@ -55,10 +58,10 @@ fun CardList(paddingValues: PaddingValues) {
                 content = { IPConfigCardContent(label = "Device", modifierCardPadding) })
             CardListCard(
                 label = "Remote",
-                content = { RemoteContent(label = "Device", modifierCardPadding) })
+                content = { RemoteContent(label = "Remote", modifierCardPadding) })
             CardListCard(
                 label = "Messages",
-                content = { MessagesCardContent(label = "Device", modifierCardPadding) })
+                content = { MessagesCardContent(label = "Messages", modifierCardPadding) })
         }
         Column() {
             MessagesList()
@@ -79,7 +82,7 @@ fun MessagesList() {
 @Composable
 fun IPConfigCardContent(label: String, modifier: Modifier) {
     Column(modifier) {
-        Text(label)
+        CardHeader(label)
         Text("IP: 0.0.0.0")
         Text("Gateway: 0.0.0.0")
         Text("Network type: LAN")
@@ -94,7 +97,7 @@ fun IPConfigCardContent(label: String, modifier: Modifier) {
 @Composable
 fun RemoteContent(label: String, modifier: Modifier) {
     Column(modifier = modifier) {
-        Text(label)
+        CardHeader(label)
         Row() {
             Text(text = "IP")
             TextField(value = "", onValueChange = {/*TODO*/ })
@@ -109,7 +112,7 @@ fun RemoteContent(label: String, modifier: Modifier) {
 @Composable
 fun MessagesCardContent(label: String, modifier: Modifier) {
     Column(modifier = modifier) {
-        Text(label)
+        CardHeader(label)
         Row {
             TextField(value = "", onValueChange = {/*TODO*/ })
             Button(onClick = { /*TODO*/ }) {
@@ -141,9 +144,14 @@ fun CardListCard(label: String, content: @Composable () -> Unit) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                Row(horizontalArrangement = Arrangement.Start) {
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 15.dp)
+                ) {
                     if (!isExtended) {
-                        Text(label)
+                        CardHeader(label)
                     }
                 }
                 IconButton(
@@ -159,4 +167,9 @@ fun CardListCard(label: String, content: @Composable () -> Unit) {
             }
         }
     }
+}
+
+@Composable
+fun CardHeader(label: String) {
+    Text(label, fontWeight = FontWeight.Bold, fontSize = 17.sp)
 }
