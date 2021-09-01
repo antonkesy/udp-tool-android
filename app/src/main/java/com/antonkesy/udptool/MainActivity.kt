@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.antonkesy.udptool.ui.screens.DetailScreen
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
 
 class MainActivity : ComponentActivity() {
@@ -38,17 +37,9 @@ fun DefaultPreview() {
 @Composable
 fun MainView() {
     UDPToolTheme {
-        Scaffold(floatingActionButton = { AddUDPItemFloatBtn() }) { innerPadding ->
-            //CardList(paddingValues = innerPadding)
-            DetailScreen(modifier = Modifier.padding(innerPadding))
+        Scaffold { innerPadding ->
+            CardList(paddingValues = innerPadding)
         }
-    }
-}
-
-@Composable
-fun AddUDPItemFloatBtn() {
-    FloatingActionButton(onClick = { /*TODO*/ }) {
-        Text(text = "Add")
     }
 }
 
@@ -56,25 +47,16 @@ fun AddUDPItemFloatBtn() {
 fun CardList(paddingValues: PaddingValues) {
     LazyColumn(
         Modifier
-            .padding(paddingValues = paddingValues)
+            .padding(paddingValues = paddingValues),
+        verticalArrangement = Arrangement.spacedBy(3.dp)
     ) {
         item {
             val modifierCardPadding = Modifier.padding(15.dp)
-            CardListCard(content = { IPConfigCardContent(modifierCardPadding) })
             CardListCard(content = { ModeContent(modifierCardPadding) })
-            CardListCard(content = { LocalPortContent(modifierCardPadding) })
+            CardListCard(content = { IPConfigCardContent(modifierCardPadding) })
             CardListCard(content = { RemoteContent(modifierCardPadding) })
             CardListCard(content = { MessagesCardContent(modifierCardPadding) })
         }
-    }
-}
-
-@Composable
-fun IPConfigCardContent(modifier: Modifier) {
-    Column(modifier) {
-        Text("IP: 0.0.0.0")
-        Text("Gateway: 0.0.0.0")
-        Text("Network type: LAN")
     }
 }
 
@@ -87,12 +69,17 @@ fun ModeContent(modifier: Modifier) {
 }
 
 @Composable
-fun LocalPortContent(modifier: Modifier) {
-    Column(modifier = modifier) {
+fun IPConfigCardContent(modifier: Modifier) {
+    Column(modifier) {
+        Text("Your device")
+        Text("IP: 0.0.0.0")
+        Text("Gateway: 0.0.0.0")
+        Text("Network type: LAN")
         Text(text = "Local Port")
         TextField(value = "", onValueChange = {/*TODO*/ })
     }
 }
+
 
 @Composable
 fun RemoteContent(modifier: Modifier) {
@@ -131,7 +118,7 @@ fun CardListCard(content: @Composable () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(15.dp),
+            .padding(5.dp),
         elevation = 10.dp
     ) {
         content()
