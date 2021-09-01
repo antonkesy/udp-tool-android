@@ -21,11 +21,6 @@ class MainActivity : ComponentActivity() {
             MainView()
         }
     }
-    //TODO
-    //layout should be like keep
-    //add connection listening and save history
-    //history as bottom sheet to pull up and full screen
-    //top has info of settings
 }
 
 @Preview(showBackground = true)
