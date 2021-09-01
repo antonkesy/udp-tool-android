@@ -17,10 +17,10 @@ import java.text.SimpleDateFormat
 fun MessagesLogList() {
     val messages = mutableListOf<ILogMessage>()
     for (i in 1..100) {
-        messages.add(DeviceLogMessage("message $i"))
+        messages.add(0, DeviceLogMessage("message $i"))
     }
 
-    LazyColumn(reverseLayout = true) {
+    LazyColumn {
         items(items = messages) {
             MessageLogItem(it)
         }
