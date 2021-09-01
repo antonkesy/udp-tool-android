@@ -38,7 +38,7 @@ fun CardList(paddingValues: PaddingValues) {
         }
         Column(
             Modifier
-                .padding(15.dp)
+                .padding(5.dp)
                 .fillMaxHeight()
         ) {
             MessagesLogList()
