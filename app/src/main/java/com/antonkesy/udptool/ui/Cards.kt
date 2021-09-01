@@ -38,7 +38,7 @@ fun CardList(paddingValues: PaddingValues) {
         }
         Column(
             Modifier
-                .padding(5.dp)
+                .padding(start = 5.dp, end = 5.dp)
                 .fillMaxHeight()
         ) {
             MessagesLogList()
@@ -57,8 +57,7 @@ fun CardListCard(label: String, content: @Composable () -> Unit) {
     var isExtended by remember { mutableStateOf(true) }
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(5.dp)
+            .padding(top = 10.dp, start = 5.dp, end = 5.dp)
             .clickable {
                 isExtended = !isExtended
             },
