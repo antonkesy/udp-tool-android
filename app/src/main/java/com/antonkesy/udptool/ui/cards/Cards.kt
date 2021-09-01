@@ -28,7 +28,12 @@ fun CardList(paddingValues: PaddingValues) {
             val modifierCardPadding = Modifier.padding(15.dp)
             CardListCard(
                 label = "Device",
-                content = { IPConfigCardContent(label = "Device", modifierCardPadding) })
+                content = {
+                    IPConfigCardContent(
+                        label = "Device",
+                        modifierCardPadding,
+                        {/*TODO*/ })
+                })
             CardListCard(
                 label = "Remote",
                 content = { RemoteContent(label = "Remote", modifierCardPadding) })
