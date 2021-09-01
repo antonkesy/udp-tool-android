@@ -1,6 +1,7 @@
 package com.antonkesy.udptool.ui.cards
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -16,7 +17,7 @@ fun RemoteContent(
     onRemoteIPChange: (ip: String) -> Unit,
     onRemotePortChange: (port: String) -> Unit
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxWidth()) {
         CardHeader(label)
         var textValueIP by remember { mutableStateOf(TextFieldValue()) }
         OutlinedTextField(
@@ -24,7 +25,8 @@ fun RemoteContent(
             onValueChange = { textValueIP = it; onRemoteIPChange(it.text) },
             label = { Text("IP") },
             maxLines = 1,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
         var textValuePort by remember { mutableStateOf(TextFieldValue()) }
         OutlinedTextField(
@@ -32,7 +34,8 @@ fun RemoteContent(
             onValueChange = { textValuePort = it; onRemotePortChange(it.text) },
             label = { Text("Port") },
             maxLines = 1,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }

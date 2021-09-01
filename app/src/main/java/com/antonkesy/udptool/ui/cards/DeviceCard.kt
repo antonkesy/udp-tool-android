@@ -1,6 +1,7 @@
 package com.antonkesy.udptool.ui.cards
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -15,7 +16,7 @@ fun IPConfigCardContent(
     modifier: Modifier,
     onLocalPortValueChanged: (text: String) -> Unit
 ) {
-    Column(modifier) {
+    Column(modifier.fillMaxWidth()) {
         CardHeader(label)
         Text("IP: 0.0.0.0")
         Text("Gateway: 0.0.0.0")
@@ -26,7 +27,8 @@ fun IPConfigCardContent(
             onValueChange = { textValue = it; onLocalPortValueChanged(it.text) },
             label = { Text("Local Port") },
             maxLines = 1,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
