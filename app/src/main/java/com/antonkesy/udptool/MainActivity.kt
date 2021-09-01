@@ -10,7 +10,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.antonkesy.udptool.ui.CardList
+import com.antonkesy.udptool.ui.cards.CardList
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
 
 class MainActivity : ComponentActivity() {

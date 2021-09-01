@@ -1,4 +1,4 @@
-package com.antonkesy.udptool.ui
+package com.antonkesy.udptool.ui.cards
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

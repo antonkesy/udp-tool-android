@@ -1,4 +1,4 @@
-package com.antonkesy.udptool.ui
+package com.antonkesy.udptool.ui.cards
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

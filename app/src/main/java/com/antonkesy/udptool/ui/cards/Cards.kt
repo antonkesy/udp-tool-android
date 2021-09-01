@@ -1,4 +1,4 @@
-package com.antonkesy.udptool.ui
+package com.antonkesy.udptool.ui.cards
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
