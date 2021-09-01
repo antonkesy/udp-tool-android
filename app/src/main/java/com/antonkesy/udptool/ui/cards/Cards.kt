@@ -45,7 +45,12 @@ fun CardList(paddingValues: PaddingValues) {
                 })
             CardListCard(
                 label = "Messages",
-                content = { MessagesCardContent(label = "Messages", modifierCardPadding) })
+                content = {
+                    MessagesCardContent(
+                        label = "Messages",
+                        modifierCardPadding
+                    ) {/*TODO()*/ }
+                })
         }
         Column(
             Modifier
