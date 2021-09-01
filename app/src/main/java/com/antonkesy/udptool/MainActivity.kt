@@ -5,10 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,26 +39,30 @@ fun MainView() {
 
 @Composable
 fun CardList(paddingValues: PaddingValues) {
-    LazyColumn(
+    Column(
         Modifier
             .padding(paddingValues = paddingValues),
         verticalArrangement = Arrangement.spacedBy(3.dp)
     ) {
-        item {
+        Column(Modifier.weight(1.0f, false)) {
             val modifierCardPadding = Modifier.padding(15.dp)
-            CardListCard(content = { ModeContent(modifierCardPadding) })
             CardListCard(content = { IPConfigCardContent(modifierCardPadding) })
             CardListCard(content = { RemoteContent(modifierCardPadding) })
             CardListCard(content = { MessagesCardContent(modifierCardPadding) })
+        }
+        Column() {
+            MessagesList()
         }
     }
 }
 
 @Composable
-fun ModeContent(modifier: Modifier) {
-    Column(modifier = modifier) {
-        Text(text = "Mode")
-        Switch(checked = false, onCheckedChange = {/*TODO()*/ })
+fun MessagesList() {
+    val messages = mutableListOf("message 1", "message 2")
+    LazyColumn() {
+        items(items = messages) {
+            Text(text = it)
+        }
     }
 }
 
@@ -70,8 +73,10 @@ fun IPConfigCardContent(modifier: Modifier) {
         Text("IP: 0.0.0.0")
         Text("Gateway: 0.0.0.0")
         Text("Network type: LAN")
-        Text(text = "Local Port")
-        TextField(value = "", onValueChange = {/*TODO*/ })
+        Row {
+            Text(text = "Local Port")
+            TextField(value = "", onValueChange = {/*TODO*/ })
+        }
     }
 }
 
@@ -80,25 +85,21 @@ fun IPConfigCardContent(modifier: Modifier) {
 fun RemoteContent(modifier: Modifier) {
     Column(modifier = modifier) {
         Text(text = "Remote")
-        Text(text = "IP")
-        TextField(value = "", onValueChange = {/*TODO*/ })
-        Text(text = "Port")
-        TextField(value = "", onValueChange = {/*TODO*/ })
+        Row() {
+            Text(text = "IP")
+            TextField(value = "", onValueChange = {/*TODO*/ })
+        }
+        Row() {
+            Text(text = "Port")
+            TextField(value = "", onValueChange = {/*TODO*/ })
+        }
     }
 }
 
 @Composable
 fun MessagesCardContent(modifier: Modifier) {
-    val messages = mutableListOf("message 1", "message 2")
-
     Column(modifier = modifier) {
         Text(text = "Messages")
-        LazyRow {
-            items(items = messages) {
-                Text(text = it)
-            }
-        }
-
         Row {
             TextField(value = "", onValueChange = {/*TODO*/ })
             Button(onClick = { /*TODO*/ }) {
@@ -110,12 +111,19 @@ fun MessagesCardContent(modifier: Modifier) {
 
 @Composable
 fun CardListCard(content: @Composable () -> Unit) {
+    var isExtended by remember { mutableStateOf(true) }
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp),
         elevation = 10.dp
     ) {
-        content()
+        Column {
+            if (isExtended) {
+                content()
+            }
+            Button(onClick = { isExtended = !isExtended }) {
+            }
+        }
     }
 }
