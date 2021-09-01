@@ -24,7 +24,7 @@ fun CardList(paddingValues: PaddingValues) {
             .padding(paddingValues = paddingValues),
         verticalArrangement = Arrangement.spacedBy(3.dp)
     ) {
-        Column(Modifier.weight(1.0f, false)) {
+        Column(Modifier.wrapContentHeight()) {
             val modifierCardPadding = Modifier.padding(15.dp)
             CardListCard(
                 label = "Device",
@@ -36,7 +36,11 @@ fun CardList(paddingValues: PaddingValues) {
                 label = "Messages",
                 content = { MessagesCardContent(label = "Messages", modifierCardPadding) })
         }
-        Column() {
+        Column(
+            Modifier
+                .padding(15.dp)
+                .fillMaxHeight()
+        ) {
             MessagesLogList()
         }
     }
