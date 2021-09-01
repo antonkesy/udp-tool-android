@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 @ExperimentalAnimationApi
 @Composable
 fun CardList(paddingValues: PaddingValues) {
+    //TODO(convert to lazyColumn)
     Column(
         Modifier
             .padding(paddingValues = paddingValues),
