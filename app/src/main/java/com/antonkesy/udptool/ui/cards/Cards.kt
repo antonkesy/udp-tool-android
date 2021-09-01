@@ -31,12 +31,18 @@ fun CardList(paddingValues: PaddingValues) {
                 content = {
                     IPConfigCardContent(
                         label = "Device",
-                        modifierCardPadding,
-                        {/*TODO*/ })
+                        modifierCardPadding
+                    ) {/*TODO*/ }
                 })
             CardListCard(
                 label = "Remote",
-                content = { RemoteContent(label = "Remote", modifierCardPadding) })
+                content = {
+                    RemoteContent(
+                        label = "Remote",
+                        modifier = modifierCardPadding,
+                        onRemoteIPChange = {/*TODO*/ },
+                        onRemotePortChange = {/*TODO*/ })
+                })
             CardListCard(
                 label = "Messages",
                 content = { MessagesCardContent(label = "Messages", modifierCardPadding) })

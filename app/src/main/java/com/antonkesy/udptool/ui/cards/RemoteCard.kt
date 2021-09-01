@@ -1,23 +1,38 @@
 package com.antonkesy.udptool.ui.cards
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 
 @Composable
-fun RemoteContent(label: String, modifier: Modifier) {
+fun RemoteContent(
+    label: String,
+    modifier: Modifier,
+    onRemoteIPChange: (ip: String) -> Unit,
+    onRemotePortChange: (port: String) -> Unit
+) {
     Column(modifier = modifier) {
         CardHeader(label)
-        Row {
-            Text(text = "IP")
-            TextField(value = "", onValueChange = {/*TODO*/ })
-        }
-        Row {
-            Text(text = "Port")
-            TextField(value = "", onValueChange = {/*TODO*/ })
-        }
+        var textValueIP by remember { mutableStateOf(TextFieldValue()) }
+        OutlinedTextField(
+            value = textValueIP,
+            onValueChange = { textValueIP = it; onRemoteIPChange(it.text) },
+            label = { Text("IP") },
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+        var textValuePort by remember { mutableStateOf(TextFieldValue()) }
+        OutlinedTextField(
+            value = textValuePort,
+            onValueChange = { textValuePort = it; onRemotePortChange(it.text) },
+            label = { Text("Port") },
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
     }
 }
