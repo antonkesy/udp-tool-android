@@ -33,7 +33,7 @@ fun CardList(paddingValues: PaddingValues) {
                     IPConfigCardContent(
                         label = "Device",
                         modifierCardPadding
-                    ) {/*TODO*/ }
+                    ) {/*TODO*/ true}
                 })
             CardListCard(
                 label = "Remote",
@@ -41,8 +41,8 @@ fun CardList(paddingValues: PaddingValues) {
                     RemoteContent(
                         label = "Remote",
                         modifier = modifierCardPadding,
-                        onRemoteIPChange = {/*TODO*/ },
-                        onRemotePortChange = {/*TODO*/ })
+                        onRemoteIPChange = {/*TODO*/true },
+                        onRemotePortChange = {/*TODO*/true })
                 })
             CardListCard(
                 label = "Messages",
@@ -51,7 +51,7 @@ fun CardList(paddingValues: PaddingValues) {
                         label = "Messages",
                         modifierCardPadding,
                         onTimeoutToggle = {/*TODO*/ },
-                        onTimeoutChange = {/*TODO*/ }
+                        onTimeoutChange = {/*TODO*/ true}
                     )
                 })
         }
