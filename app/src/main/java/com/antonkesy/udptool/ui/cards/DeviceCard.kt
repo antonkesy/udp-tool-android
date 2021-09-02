@@ -12,9 +12,7 @@ import com.antonkesy.udptool.ui.NumberOutlinedTextField
 @ExperimentalAnimationApi
 @Composable
 fun DeviceCard() {
-
     val label = "Device"
-    val dialogText = "Text"
     CardListCard(
         label = label,
         content = {
@@ -23,7 +21,7 @@ fun DeviceCard() {
                 helpDialogBoxButton = {
                     HelpDialogBoxButton(
                         dialogTitle = label,
-                        dialogText = dialogText
+                        dialogText = "Text"
                     )
                 }
             )
