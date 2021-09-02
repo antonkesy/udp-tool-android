@@ -39,12 +39,6 @@ fun MessagesCardContent(
                 onCheckedChange = { isTimeoutEnabled = it;onTimeoutToggle(it) })
             NumberOutlinedTextField("Timeout", onTimeoutChange)
         }
-        Row {
-            TextField(value = "", onValueChange = {/*TODO*/ })
-            Button(onClick = { /*TODO*/ }) {
-                Text(text = "send")
-            }
-        }
     }
 }
 
