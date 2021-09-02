@@ -26,18 +26,35 @@ fun CardList(paddingValues: PaddingValues) {
         verticalArrangement = Arrangement.spacedBy(3.dp)
     ) {
         Column(Modifier.wrapContentHeight()) {
+            var isDialogShown by remember { mutableStateOf(false) }
+            var dialogLabel by remember { mutableStateOf("") }
+            var dialogText by remember { mutableStateOf("") }
+
+            HelpDialogBox(
+                isDialogShown = isDialogShown, dialogTitle = dialogLabel,
+                dialogText = dialogText
+            ) { isDialogShown = !isDialogShown }
+
             CardListCard(
                 label = "Device",
                 content = {
                     IPConfigCardContent {/*TODO*/ true }
-                }, onHelpClick = {})
+                }, onHelpClick = {
+                    isDialogShown = true
+                    dialogLabel = "Device"
+                    dialogText = "Text"
+                })
             CardListCard(
                 label = "Remote",
                 content = {
                     RemoteContent(
                         onRemoteIPChange = {/*TODO*/true },
                         onRemotePortChange = {/*TODO*/true })
-                }, onHelpClick = {})
+                }, onHelpClick = {
+                    isDialogShown = true
+                    dialogLabel = "Remote"
+                    dialogText = "Text"
+                })
             CardListCard(
                 label = "Messages",
                 content = {
@@ -45,7 +62,11 @@ fun CardList(paddingValues: PaddingValues) {
                         onTimeoutToggle = {/*TODO*/ },
                         onTimeoutChange = {/*TODO*/ true }
                     )
-                }, onHelpClick = {})
+                }, onHelpClick = {
+                    isDialogShown = true
+                    dialogLabel = "Messages"
+                    dialogText = "Text"
+                })
         }
         Column(
             Modifier
@@ -167,5 +188,35 @@ fun CardBottomRow(
                 modifier = Modifier.size(ButtonDefaults.IconSize)
             )
         }
+    }
+}
+
+@Composable
+fun HelpDialogBox(
+    isDialogShown: Boolean,
+    dialogTitle: String,
+    dialogText: String,
+    onHelpClose: () -> Unit
+) {
+    if (isDialogShown) {
+        AlertDialog(
+            onDismissRequest = {
+            },
+            title = {
+                Text(dialogTitle)
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        onHelpClose()
+                    },
+                ) {
+                    Text("Ok :)")
+                }
+            },
+            text = {
+                Text(dialogText)
+            },
+        )
     }
 }
