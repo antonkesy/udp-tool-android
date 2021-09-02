@@ -39,10 +39,11 @@ fun CardList(paddingValues: PaddingValues) {
                 label = "Device",
                 content = {
                     IPConfigCardContent {/*TODO*/ true }
-                }, onHelpClick = {
+                }, dialogText = "text", onHelpClick =
+                { _dialogLabel, _dialogText ->
                     isDialogShown = true
-                    dialogLabel = "Device"
-                    dialogText = "Text"
+                    dialogLabel = _dialogLabel
+                    dialogText = _dialogText
                 })
             CardListCard(
                 label = "Remote",
@@ -50,10 +51,11 @@ fun CardList(paddingValues: PaddingValues) {
                     RemoteContent(
                         onRemoteIPChange = {/*TODO*/true },
                         onRemotePortChange = {/*TODO*/true })
-                }, onHelpClick = {
+                }, dialogText = "text", onHelpClick =
+                { _dialogLabel, _dialogText ->
                     isDialogShown = true
-                    dialogLabel = "Remote"
-                    dialogText = "Text"
+                    dialogLabel = _dialogLabel
+                    dialogText = _dialogText
                 })
             CardListCard(
                 label = "Messages",
@@ -62,11 +64,13 @@ fun CardList(paddingValues: PaddingValues) {
                         onTimeoutToggle = {/*TODO*/ },
                         onTimeoutChange = {/*TODO*/ true }
                     )
-                }, onHelpClick = {
+                }, dialogText = "text", onHelpClick =
+                { _dialogLabel, _dialogText ->
                     isDialogShown = true
-                    dialogLabel = "Messages"
-                    dialogText = "Text"
-                })
+                    dialogLabel = _dialogLabel
+                    dialogText = _dialogText
+                }
+            )
         }
         Column(
             Modifier
@@ -85,7 +89,13 @@ fun CardHeader(label: String) {
 
 @ExperimentalAnimationApi
 @Composable
-fun CardListCard(label: String, content: @Composable () -> Unit, onHelpClick: () -> Unit) {
+fun CardListCard(
+    label: String, content: @Composable () -> Unit, dialogText: String,
+    onHelpClick: (
+        dialogLabel: String,
+        dialogText: String
+    ) -> Unit
+) {
     var isExtended by remember { mutableStateOf(true) }
     Card(
         modifier = Modifier
@@ -99,7 +109,7 @@ fun CardListCard(label: String, content: @Composable () -> Unit, onHelpClick: ()
             CardExtendedContent(
                 label = label,
                 isExtended = isExtended,
-                onHelpClick = onHelpClick,
+                onHelpClick = { onHelpClick(label, dialogText) },
                 content = content
             )
             CardBottomRow(
