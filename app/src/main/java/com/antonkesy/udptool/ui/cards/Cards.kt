@@ -49,8 +49,10 @@ fun CardList(paddingValues: PaddingValues) {
                 content = {
                     MessagesCardContent(
                         label = "Messages",
-                        modifierCardPadding
-                    ) {/*TODO()*/ }
+                        modifierCardPadding,
+                        onTimeoutToggle = {/*TODO*/ },
+                        onTimeoutChange = {/*TODO*/ }
+                    )
                 })
         }
         Column(
