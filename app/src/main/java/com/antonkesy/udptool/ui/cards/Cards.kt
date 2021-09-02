@@ -31,14 +31,14 @@ fun CardList(paddingValues: PaddingValues) {
                 label = "Device",
                 content = {
                     IPConfigCardContent {/*TODO*/ true }
-                })
+                }, onHelpClick = {})
             CardListCard(
                 label = "Remote",
                 content = {
                     RemoteContent(
                         onRemoteIPChange = {/*TODO*/true },
                         onRemotePortChange = {/*TODO*/true })
-                })
+                }, onHelpClick = {})
             CardListCard(
                 label = "Messages",
                 content = {
@@ -46,7 +46,7 @@ fun CardList(paddingValues: PaddingValues) {
                         onTimeoutToggle = {/*TODO*/ },
                         onTimeoutChange = {/*TODO*/ true }
                     )
-                })
+                }, onHelpClick = {})
         }
         Column(
             Modifier
@@ -65,7 +65,7 @@ fun CardHeader(label: String) {
 
 @ExperimentalAnimationApi
 @Composable
-fun CardListCard(label: String, content: @Composable () -> Unit) {
+fun CardListCard(label: String, content: @Composable () -> Unit, onHelpClick: () -> Unit) {
     var isExtended by remember { mutableStateOf(true) }
     Card(
         modifier = Modifier
@@ -82,7 +82,7 @@ fun CardListCard(label: String, content: @Composable () -> Unit) {
                         .fillMaxWidth()
                         .padding(15.dp)
                 ) {
-                    CardHeaderRow(label)
+                    CardHeaderRow(label = label, onHelpClick = onHelpClick)
                     content()
                 }
             }
@@ -116,7 +116,7 @@ fun CardListCard(label: String, content: @Composable () -> Unit) {
 }
 
 @Composable
-fun CardHeaderRow(label: String) {
+fun CardHeaderRow(label: String, onHelpClick: () -> Unit) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -124,7 +124,7 @@ fun CardHeaderRow(label: String) {
     ) {
         CardHeader(label)
         IconButton(
-            onClick = { /*TODO*/ },
+            onClick = { onHelpClick() },
         ) {
             Icon(
                 Icons.Outlined.Help,
