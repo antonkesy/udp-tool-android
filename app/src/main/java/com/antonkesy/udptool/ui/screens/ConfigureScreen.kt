@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.antonkesy.udptool.ui.cards.DeviceCard
-import com.antonkesy.udptool.ui.cards.MessageCard
 import com.antonkesy.udptool.ui.cards.RemoteCard
+import com.antonkesy.udptool.ui.cards.ToggleLogCard
 
 @Composable
 fun ConfigureScreen(paddingValues: PaddingValues) {
@@ -23,6 +23,6 @@ fun ConfigureScreen(paddingValues: PaddingValues) {
     ) {
         DeviceCard()
         RemoteCard()
-        MessageCard()
+        ToggleLogCard()
     }
 }
