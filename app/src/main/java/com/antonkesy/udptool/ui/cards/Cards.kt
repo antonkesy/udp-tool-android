@@ -118,7 +118,7 @@ fun CardExtendedContent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(15.dp)
+                .padding(start = 8.dp, end = 8.dp)
         ) {
             CardHeaderRow(label = title, dialogText = dialogText)
             content()
@@ -142,7 +142,7 @@ fun CardBottomRow(
             horizontalArrangement = Arrangement.Start,
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .padding(start = 15.dp)
+                .padding(start = 8.dp)
         ) {
             AnimatedVisibility(
                 visible = !isExtended, enter = slideInVertically() + expandVertically() + fadeIn(),
