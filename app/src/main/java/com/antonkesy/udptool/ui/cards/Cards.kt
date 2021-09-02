@@ -76,44 +76,20 @@ fun CardListCard(label: String, content: @Composable () -> Unit, onHelpClick: ()
         elevation = 10.dp
     ) {
         Column {
-            AnimatedVisibility(visible = isExtended) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(15.dp)
-                ) {
-                    CardHeaderRow(label = label, onHelpClick = onHelpClick)
-                    content()
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(start = 15.dp)
-                ) {
-                    AnimatedVisibility(visible = !isExtended) { CardHeader(label) }
-                }
-                IconButton(
-                    onClick = { isExtended = !isExtended },
-                ) {
-                    Icon(
-                        if (isExtended)
-                            Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
-                        contentDescription = null,
-                        modifier = Modifier.size(ButtonDefaults.IconSize)
-                    )
-                }
-            }
+            CardExtendedContent(
+                label = label,
+                isExtended = isExtended,
+                onHelpClick = onHelpClick,
+                content = content
+            )
+            CardBottomRow(
+                isExtended = isExtended, onToggleExtended = { isExtended = !isExtended },
+                label = label
+            )
         }
     }
 }
+
 
 @Composable
 fun CardHeaderRow(label: String, onHelpClick: () -> Unit) {
@@ -129,6 +105,61 @@ fun CardHeaderRow(label: String, onHelpClick: () -> Unit) {
             Icon(
                 Icons.Outlined.Help,
                 contentDescription = "help",
+                modifier = Modifier.size(ButtonDefaults.IconSize)
+            )
+        }
+    }
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun CardExtendedContent(
+    label: String,
+    isExtended: Boolean,
+    onHelpClick: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    AnimatedVisibility(
+        visible = isExtended
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(15.dp)
+        ) {
+            CardHeaderRow(label = label, onHelpClick = onHelpClick)
+            content()
+        }
+    }
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun CardBottomRow(
+    isExtended: Boolean,
+    onToggleExtended: () -> Unit,
+    label: String
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .padding(start = 15.dp)
+        ) {
+            AnimatedVisibility(visible = !isExtended) { CardHeader(label) }
+        }
+        IconButton(
+            onClick = { onToggleExtended() },
+        ) {
+            Icon(
+                if (isExtended)
+                    Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+                contentDescription = null,
                 modifier = Modifier.size(ButtonDefaults.IconSize)
             )
         }
