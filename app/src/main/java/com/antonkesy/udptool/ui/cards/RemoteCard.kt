@@ -8,13 +8,10 @@ import com.antonkesy.udptool.ui.NumberOutlinedTextField
 
 @Composable
 fun RemoteContent(
-    label: String,
-    modifier: Modifier,
     onRemoteIPChange: (ip: String) -> Boolean,
     onRemotePortChange: (port: String) -> Boolean
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
-        CardHeader(label)
+    Column(modifier = Modifier.fillMaxWidth()) {
         NumberOutlinedTextField("IP", onRemoteIPChange)
         NumberOutlinedTextField("Port", onRemotePortChange)
     }

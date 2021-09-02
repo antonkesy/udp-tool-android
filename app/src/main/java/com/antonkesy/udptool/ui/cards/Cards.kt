@@ -26,21 +26,15 @@ fun CardList(paddingValues: PaddingValues) {
         verticalArrangement = Arrangement.spacedBy(3.dp)
     ) {
         Column(Modifier.wrapContentHeight()) {
-            val modifierCardPadding = Modifier.padding(15.dp)
             CardListCard(
                 label = "Device",
                 content = {
-                    IPConfigCardContent(
-                        label = "Device",
-                        modifierCardPadding
-                    ) {/*TODO*/ true}
+                    IPConfigCardContent {/*TODO*/ true }
                 })
             CardListCard(
                 label = "Remote",
                 content = {
                     RemoteContent(
-                        label = "Remote",
-                        modifier = modifierCardPadding,
                         onRemoteIPChange = {/*TODO*/true },
                         onRemotePortChange = {/*TODO*/true })
                 })
@@ -48,10 +42,8 @@ fun CardList(paddingValues: PaddingValues) {
                 label = "Messages",
                 content = {
                     MessagesCardContent(
-                        label = "Messages",
-                        modifierCardPadding,
                         onTimeoutToggle = {/*TODO*/ },
-                        onTimeoutChange = {/*TODO*/ true}
+                        onTimeoutChange = {/*TODO*/ true }
                     )
                 })
         }
@@ -83,7 +75,16 @@ fun CardListCard(label: String, content: @Composable () -> Unit) {
         elevation = 10.dp
     ) {
         Column {
-            AnimatedVisibility(visible = isExtended) { content() }
+            AnimatedVisibility(visible = isExtended) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(15.dp)
+                ) {
+                    CardHeader(label)
+                    content()
+                }
+            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),

@@ -9,12 +9,9 @@ import com.antonkesy.udptool.ui.NumberOutlinedTextField
 
 @Composable
 fun IPConfigCardContent(
-    label: String,
-    modifier: Modifier,
     onLocalPortValueChanged: (text: String) -> Boolean
 ) {
-    Column(modifier.fillMaxWidth()) {
-        CardHeader(label)
+    Column(Modifier.fillMaxWidth()) {
         Text("IP: 0.0.0.0")
         Text("Gateway: 0.0.0.0")
         Text("Network type: LAN")
