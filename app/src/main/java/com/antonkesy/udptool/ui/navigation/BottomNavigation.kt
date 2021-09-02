@@ -14,6 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.antonkesy.udptool.ui.log.MessageLogViewModel
 import com.antonkesy.udptool.ui.screens.ConfigureScreen
 import com.antonkesy.udptool.ui.screens.LogScreen
 import com.antonkesy.udptool.ui.screens.SplashScreen
@@ -53,17 +54,18 @@ fun BottomNavigationWithOnlySelectedLabels(
 @Composable
 fun Navigation(
     navController: NavHostController,
-    innerPadding: PaddingValues
+    innerPadding: PaddingValues,
+    logViewModel: MessageLogViewModel
 ) {
     NavHost(navController, startDestination = NavCategories.Splash.route) {
         composable(NavCategories.Splash.route) {
-            SplashScreen(navController, NavCategories.Configure.route)
+            SplashScreen()
         }
         composable(NavCategories.Configure.route) {
-            ConfigureScreen(innerPadding)
+            ConfigureScreen(paddingValues = innerPadding)
         }
         composable(NavCategories.Log.route) {
-            LogScreen(innerPadding)
+            LogScreen(paddingValues = innerPadding, logViewModel = logViewModel)
         }
 
     }
