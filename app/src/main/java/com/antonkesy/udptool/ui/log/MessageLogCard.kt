@@ -1,4 +1,4 @@
-package com.antonkesy.udptool.ui.cards
+package com.antonkesy.udptool.ui.log
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,9 +20,12 @@ import java.text.SimpleDateFormat
 @Composable
 fun MessagesLogList() {
     val messages = mutableListOf<ILogMessage>()
-    for (i in 1..100) {
+
+
+    for (i in 1..1000) {
         messages.add(0, DeviceLogMessage("message $i"))
     }
+    
 
     LazyColumn {
         items(items = messages) {
