@@ -25,6 +25,8 @@ class MainActivity : ComponentActivity() {
 
         val messageViewModel: MessageLogViewModel by viewModels()
 
+        messageViewModel.generateTestLogMessages()
+
         setContent {
             MainView(messageViewModel)
         }
