@@ -3,6 +3,9 @@ package com.antonkesy.udptool
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.slideInVertically
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,6 +19,7 @@ import kotlinx.coroutines.delay
 class MainActivity : ComponentActivity() {
 
 
+    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -25,12 +29,14 @@ class MainActivity : ComponentActivity() {
 }
 
 
+@ExperimentalAnimationApi
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MainView()
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun MainView() {
     var isSplashScreenShowing by remember { mutableStateOf(true) }
@@ -50,7 +56,10 @@ fun MainView() {
         )
 
         Scaffold(bottomBar = {
-            if (!isSplashScreenShowing) {
+            AnimatedVisibility(
+                !isSplashScreenShowing,
+                enter = slideInVertically(initialOffsetY = { 300 })
+            ) {
                 BottomNavigationWithOnlySelectedLabels(
                     items = bottomNavigationItems,
                     navController = navController
