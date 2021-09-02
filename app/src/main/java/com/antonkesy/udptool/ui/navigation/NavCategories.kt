@@ -14,4 +14,7 @@ sealed class NavCategories(
 
     object Log :
         NavCategories("Log", R.string.log, R.drawable.ic_baseline_message_24)
+
+    object Splash :
+        NavCategories("Splash", R.string.splash_screen, R.drawable.ic_launcher_foreground)
 }

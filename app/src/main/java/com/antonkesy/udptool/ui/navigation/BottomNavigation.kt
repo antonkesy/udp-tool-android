@@ -1,6 +1,5 @@
-package com.antonkesy.udptool.ui
+package com.antonkesy.udptool.ui.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -15,9 +14,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.antonkesy.udptool.ui.navigation.NavCategories
 import com.antonkesy.udptool.ui.screens.ConfigureScreen
 import com.antonkesy.udptool.ui.screens.LogScreen
+import com.antonkesy.udptool.ui.screens.SplashScreen
 
 
 @Composable
@@ -56,7 +55,10 @@ fun Navigation(
     navController: NavHostController,
     innerPadding: PaddingValues
 ) {
-    NavHost(navController, startDestination = NavCategories.Configure.route) {
+    NavHost(navController, startDestination = NavCategories.Splash.route) {
+        composable(NavCategories.Splash.route) {
+            SplashScreen(navController, NavCategories.Configure.route)
+        }
         composable(NavCategories.Configure.route) {
             ConfigureScreen(innerPadding)
         }

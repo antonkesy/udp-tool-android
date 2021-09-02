@@ -7,8 +7,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.antonkesy.udptool.ui.BottomNavigationWithOnlySelectedLabels
-import com.antonkesy.udptool.ui.Navigation
+import com.antonkesy.udptool.ui.navigation.BottomNavigationWithOnlySelectedLabels
+import com.antonkesy.udptool.ui.navigation.Navigation
 import com.antonkesy.udptool.ui.navigation.NavCategories
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
 
