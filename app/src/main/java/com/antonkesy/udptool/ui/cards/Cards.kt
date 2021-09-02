@@ -24,7 +24,7 @@ fun CardListCard(
     var isExtended by remember { mutableStateOf(true) }
     Card(
         modifier = Modifier
-            .padding(15.dp)
+            .padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 6.dp)
             .clickable {
                 isExtended = !isExtended
             },
