@@ -51,7 +51,6 @@ fun BottomNavigationWithOnlySelectedLabels(
     }
 }
 
-@ExperimentalAnimationApi
 @Composable
 fun Navigation(
     navController: NavHostController,

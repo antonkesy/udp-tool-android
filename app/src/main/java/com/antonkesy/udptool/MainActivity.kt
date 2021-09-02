@@ -10,12 +10,15 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.antonkesy.udptool.ui.cards.CardList
+import androidx.navigation.compose.rememberNavController
+import com.antonkesy.udptool.ui.BottomNavigationWithOnlySelectedLabels
+import com.antonkesy.udptool.ui.Navigation
+import com.antonkesy.udptool.ui.navigation.NavCategories
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
 
 class MainActivity : ComponentActivity() {
 
-    @ExperimentalAnimationApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -24,19 +27,30 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@ExperimentalAnimationApi
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MainView()
 }
 
-@ExperimentalAnimationApi
 @Composable
 fun MainView() {
     UDPToolTheme {
-        Scaffold(floatingActionButton = { StartStopFloatingActionButton() }) { innerPadding ->
-            CardList(paddingValues = innerPadding)
+        val navController = rememberNavController()
+
+        val bottomNavigationItems = listOf(
+            NavCategories.Configure,
+            NavCategories.Log
+        )
+
+        Scaffold(bottomBar = {
+            BottomNavigationWithOnlySelectedLabels(
+                items = bottomNavigationItems,
+                navController = navController
+            )
+        }, floatingActionButton = { StartStopFloatingActionButton() }) { innerPadding ->
+            Navigation(navController = navController, innerPadding = innerPadding)
         }
     }
 }
