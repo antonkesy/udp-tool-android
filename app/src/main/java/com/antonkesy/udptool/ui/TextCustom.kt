@@ -25,6 +25,7 @@ fun NumberOutlinedTextField(
         onValueChange = { textValuePort = it;isErrorPort = onOutlineTextFieldValueChange(it.text) },
         label = { Text(label) },
         maxLines = 1,
+        singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         modifier = Modifier.fillMaxWidth(), trailingIcon = {
             if (isErrorPort)
