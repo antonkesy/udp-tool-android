@@ -26,37 +26,15 @@ fun CardList(paddingValues: PaddingValues) {
         verticalArrangement = Arrangement.spacedBy(3.dp)
     ) {
         Column(Modifier.wrapContentHeight()) {
-            var isDialogShown by remember { mutableStateOf(false) }
-            var dialogLabel by remember { mutableStateOf("") }
-            var dialogText by remember { mutableStateOf("") }
-
-            HelpDialogBox(
-                isDialogShown = isDialogShown, dialogTitle = dialogLabel,
-                dialogText = dialogText
-            ) { isDialogShown = !isDialogShown }
-
-            CardListCard(
-                label = "Device",
-                content = {
-                    IPConfigCardContent {/*TODO*/ true }
-                }, dialogText = "text", onHelpClick =
-                { _dialogLabel, _dialogText ->
-                    isDialogShown = true
-                    dialogLabel = _dialogLabel
-                    dialogText = _dialogText
-                })
+            DeviceCard()
             CardListCard(
                 label = "Remote",
                 content = {
                     RemoteContent(
                         onRemoteIPChange = {/*TODO*/true },
                         onRemotePortChange = {/*TODO*/true })
-                }, dialogText = "text", onHelpClick =
-                { _dialogLabel, _dialogText ->
-                    isDialogShown = true
-                    dialogLabel = _dialogLabel
-                    dialogText = _dialogText
-                })
+                }, dialogText = "text"
+            )
             CardListCard(
                 label = "Messages",
                 content = {
@@ -64,12 +42,7 @@ fun CardList(paddingValues: PaddingValues) {
                         onTimeoutToggle = {/*TODO*/ },
                         onTimeoutChange = {/*TODO*/ true }
                     )
-                }, dialogText = "text", onHelpClick =
-                { _dialogLabel, _dialogText ->
-                    isDialogShown = true
-                    dialogLabel = _dialogLabel
-                    dialogText = _dialogText
-                }
+                }, dialogText = "text"
             )
         }
         Column(
@@ -90,11 +63,7 @@ fun CardHeader(label: String) {
 @ExperimentalAnimationApi
 @Composable
 fun CardListCard(
-    label: String, content: @Composable () -> Unit, dialogText: String,
-    onHelpClick: (
-        dialogLabel: String,
-        dialogText: String
-    ) -> Unit
+    label: String, content: @Composable () -> Unit, dialogText: String
 ) {
     var isExtended by remember { mutableStateOf(true) }
     Card(
@@ -107,10 +76,9 @@ fun CardListCard(
     ) {
         Column {
             CardExtendedContent(
-                label = label,
+                title = label,
                 isExtended = isExtended,
-                onHelpClick = { onHelpClick(label, dialogText) },
-                content = content
+                content = content, dialogText = dialogText
             )
             CardBottomRow(
                 isExtended = isExtended, onToggleExtended = { isExtended = !isExtended },
@@ -122,7 +90,8 @@ fun CardListCard(
 
 
 @Composable
-fun CardHeaderRow(label: String, onHelpClick: () -> Unit) {
+fun CardHeaderRow(label: String, dialogText: String) {
+    var isDialogShown by remember { mutableStateOf(false) }
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -130,7 +99,7 @@ fun CardHeaderRow(label: String, onHelpClick: () -> Unit) {
     ) {
         CardHeader(label)
         IconButton(
-            onClick = { onHelpClick() },
+            onClick = { isDialogShown = true },
         ) {
             Icon(
                 Icons.Outlined.Help,
@@ -139,14 +108,21 @@ fun CardHeaderRow(label: String, onHelpClick: () -> Unit) {
             )
         }
     }
+    if (isDialogShown) {
+        HelpDialogBox(
+            isDialogShown,
+            dialogTitle = label,
+            dialogText = dialogText,
+            onConfirmClick = { isDialogShown = false })
+    }
 }
 
 @ExperimentalAnimationApi
 @Composable
 fun CardExtendedContent(
-    label: String,
+    title: String,
+    dialogText: String,
     isExtended: Boolean,
-    onHelpClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
     AnimatedVisibility(
@@ -159,7 +135,7 @@ fun CardExtendedContent(
                 .fillMaxWidth()
                 .padding(15.dp)
         ) {
-            CardHeaderRow(label = label, onHelpClick = onHelpClick)
+            CardHeaderRow(label = title, dialogText = dialogText)
             content()
         }
     }
@@ -205,8 +181,7 @@ fun CardBottomRow(
 fun HelpDialogBox(
     isDialogShown: Boolean,
     dialogTitle: String,
-    dialogText: String,
-    onHelpClose: () -> Unit
+    dialogText: String, onConfirmClick: () -> Unit
 ) {
     if (isDialogShown) {
         AlertDialog(
@@ -218,7 +193,7 @@ fun HelpDialogBox(
             confirmButton = {
                 Button(
                     onClick = {
-                        onHelpClose()
+                        onConfirmClick()
                     },
                 ) {
                     Text("Ok :)")
