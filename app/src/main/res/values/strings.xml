@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">UDP Tool</string>
+    <string name="configure">Configure</string>
+    <string name="log">Log</string>
 </resources>
