@@ -1,7 +1,6 @@
 package com.antonkesy.udptool.ui.cards
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -120,7 +119,9 @@ fun CardExtendedContent(
     content: @Composable () -> Unit
 ) {
     AnimatedVisibility(
-        visible = isExtended
+        visible = isExtended,
+        enter = slideInVertically() + expandVertically() + fadeIn(),
+        exit = slideOutVertically() + shrinkVertically() + fadeOut()
     ) {
         Column(
             modifier = Modifier
@@ -151,7 +152,10 @@ fun CardBottomRow(
                 .align(Alignment.CenterVertically)
                 .padding(start = 15.dp)
         ) {
-            AnimatedVisibility(visible = !isExtended) { CardHeader(label) }
+            AnimatedVisibility(
+                visible = !isExtended, enter = slideInVertically() + expandVertically() + fadeIn(),
+                exit = slideOutVertically() + shrinkVertically() + fadeOut()
+            ) { CardHeader(label) }
         }
         IconButton(
             onClick = { onToggleExtended() },
