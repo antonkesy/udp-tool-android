@@ -79,7 +79,9 @@ fun CardHeaderRow(
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp)
     ) {
         CardHeader(label)
         IconButton(
