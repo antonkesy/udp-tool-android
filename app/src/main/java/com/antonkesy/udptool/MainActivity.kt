@@ -1,6 +1,7 @@
 package com.antonkesy.udptool
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -40,7 +41,7 @@ fun MainView(logViewModel: MessageLogViewModel) {
     UDPToolTheme {
         val navController = rememberNavController()
 
-        produceState(initialValue = -1) {
+        LaunchedEffect(key1 = true) {
             delay(750)
             isSplashScreenShowing = false
             navController.popBackStack()
