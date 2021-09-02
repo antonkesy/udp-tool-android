@@ -4,13 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.antonkesy.udptool.ui.navigation.BottomNavigationWithOnlySelectedLabels
-import com.antonkesy.udptool.ui.navigation.Navigation
 import com.antonkesy.udptool.ui.navigation.NavCategories
+import com.antonkesy.udptool.ui.navigation.Navigation
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
 
@@ -32,8 +33,16 @@ fun DefaultPreview() {
 
 @Composable
 fun MainView() {
+    var isSplashScreenShowing by remember { mutableStateOf(true) }
     UDPToolTheme {
         val navController = rememberNavController()
+
+        produceState(initialValue = -1) {
+            delay(750)
+            isSplashScreenShowing = false
+            navController.popBackStack()
+            navController.navigate(NavCategories.Configure.route)
+        }
 
         val bottomNavigationItems = listOf(
             NavCategories.Configure,
@@ -41,10 +50,12 @@ fun MainView() {
         )
 
         Scaffold(bottomBar = {
-            BottomNavigationWithOnlySelectedLabels(
-                items = bottomNavigationItems,
-                navController = navController
-            )
+            if (!isSplashScreenShowing) {
+                BottomNavigationWithOnlySelectedLabels(
+                    items = bottomNavigationItems,
+                    navController = navController
+                )
+            }
         }) { innerPadding ->
             Navigation(navController = navController, innerPadding = innerPadding)
         }
