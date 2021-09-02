@@ -27,23 +27,8 @@ fun CardList(paddingValues: PaddingValues) {
     ) {
         Column(Modifier.wrapContentHeight()) {
             DeviceCard()
-            CardListCard(
-                label = "Remote",
-                content = {
-                    RemoteContent(
-                        onRemoteIPChange = {/*TODO*/true },
-                        onRemotePortChange = {/*TODO*/true })
-                }, dialogText = "text"
-            )
-            CardListCard(
-                label = "Messages",
-                content = {
-                    MessagesCardContent(
-                        onTimeoutToggle = {/*TODO*/ },
-                        onTimeoutChange = {/*TODO*/ true }
-                    )
-                }, dialogText = "text"
-            )
+            RemoteCard()
+            MessageCard()
         }
         Column(
             Modifier

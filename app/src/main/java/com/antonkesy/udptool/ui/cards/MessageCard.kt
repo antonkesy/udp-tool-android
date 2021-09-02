@@ -1,5 +1,6 @@
 package com.antonkesy.udptool.ui.cards
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,20 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
+
+@ExperimentalAnimationApi
+@Composable
+fun MessageCard() {
+    CardListCard(
+        label = "Message",
+        content = {
+            MessagesCardContent(
+                onTimeoutToggle = {/*TODO*/ },
+                onTimeoutChange = {/*TODO*/ true }
+            )
+        }, dialogText = "text"
+    )
+}
 
 @Composable
 fun MessagesCardContent(
