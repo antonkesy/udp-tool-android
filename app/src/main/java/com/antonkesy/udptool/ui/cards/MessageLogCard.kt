@@ -41,7 +41,11 @@ fun MessageLogItem(message: ILogMessage) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         val formatter = SimpleDateFormat("HH:mm:ss.SSS")
-        Text(text = formatter.format(message.time) + ":", textAlign = TextAlign.Start, maxLines = 1)
+        Text(
+            text = "[" + formatter.format(message.time) + "]:",
+            textAlign = TextAlign.Start,
+            maxLines = 1
+        )
         Text(
             text = message.message,
             textAlign = TextAlign.Start,
