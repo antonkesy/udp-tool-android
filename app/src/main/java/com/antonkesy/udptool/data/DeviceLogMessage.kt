@@ -1,7 +1,11 @@
 package com.antonkesy.udptool.data
 
+import java.text.SimpleDateFormat
 import java.util.*
 
-data class DeviceLogMessage(override val message: String, override val time: Long) : ILogMessage {
-    constructor(message: String) : this(message = message, Date().time)
+data class DeviceLogMessage(override val message: String, override val time: String) : ILogMessage {
+    constructor(message: String) : this(
+        message = message,
+        SimpleDateFormat("HH:mm:ss.SSS").format(Date().time)
+    )
 }

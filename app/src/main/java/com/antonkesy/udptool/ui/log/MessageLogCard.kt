@@ -15,14 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.antonkesy.udptool.data.ILogMessage
-import java.text.SimpleDateFormat
 
 
 @Composable
 fun MessagesLogList(logViewModel: MessageLogViewModel) {
     val messages: List<ILogMessage> by logViewModel.logMessages.observeAsState(emptyList())
-
-    logViewModel.generateTestLogMessages()
 
     LazyColumn {
         items(items = messages) {
@@ -40,9 +37,9 @@ fun MessageLogItem(message: ILogMessage) {
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        val formatter = SimpleDateFormat("HH:mm:ss.SSS")
+
         Text(
-            text = "[${formatter.format(message.time)}]:",
+            text = "[${message.time}]:",
             textAlign = TextAlign.Start,
             maxLines = 1
         )
