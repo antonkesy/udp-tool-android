@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.outlined.Help
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -81,7 +82,7 @@ fun CardListCard(label: String, content: @Composable () -> Unit) {
                         .fillMaxWidth()
                         .padding(15.dp)
                 ) {
-                    CardHeader(label)
+                    CardHeaderRow(label)
                     content()
                 }
             }
@@ -110,6 +111,26 @@ fun CardListCard(label: String, content: @Composable () -> Unit) {
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun CardHeaderRow(label: String) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        CardHeader(label)
+        IconButton(
+            onClick = { /*TODO*/ },
+        ) {
+            Icon(
+                Icons.Outlined.Help,
+                contentDescription = "help",
+                modifier = Modifier.size(ButtonDefaults.IconSize)
+            )
         }
     }
 }
