@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.antonkesy.udptool.ui.HelpDialogBoxButton
 
 
 @ExperimentalAnimationApi
@@ -47,7 +48,7 @@ fun CardHeader(label: String) {
 @ExperimentalAnimationApi
 @Composable
 fun CardListCard(
-    label: String, content: @Composable () -> Unit
+    label: String, dialogText: String, content: @Composable () -> Unit
 ) {
     var isExtended by remember { mutableStateOf(true) }
     Card(
@@ -61,6 +62,7 @@ fun CardListCard(
         Column {
             CardExtendedContent(
                 title = label,
+                dialogText = dialogText,
                 isExtended = isExtended,
                 content = content,
                 onToggleExtended = { isExtended = !isExtended }
@@ -70,11 +72,13 @@ fun CardListCard(
 }
 
 
+@ExperimentalAnimationApi
 @Composable
 fun CardHeaderRow(
     label: String,
     isExtended: Boolean,
-    onToggleExtended: () -> Unit
+    onToggleExtended: () -> Unit,
+    dialogText: String
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -83,7 +87,19 @@ fun CardHeaderRow(
             .fillMaxWidth()
             .padding(start = 10.dp)
     ) {
-        CardHeader(label)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            CardHeader(label)
+            AnimatedVisibility(
+                visible = isExtended,
+                enter = slideInVertically() + fadeIn(),
+                exit = slideOutVertically() + fadeOut()
+            ) {
+                HelpDialogBoxButton(
+                    dialogTitle = label,
+                    dialogText = dialogText
+                )
+            }
+        }
         IconButton(
             onClick = { onToggleExtended() },
         ) {
@@ -102,12 +118,14 @@ fun CardHeaderRow(
 @Composable
 fun CardExtendedContent(
     title: String,
+    dialogText: String,
     isExtended: Boolean,
     content: @Composable () -> Unit,
     onToggleExtended: () -> Unit
 ) {
     CardHeaderRow(
         label = title,
+        dialogText = dialogText,
         isExtended = isExtended,
         onToggleExtended = { onToggleExtended() })
     AnimatedVisibility(

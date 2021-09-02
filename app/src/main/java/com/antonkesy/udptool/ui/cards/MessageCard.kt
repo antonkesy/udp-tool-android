@@ -10,7 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import com.antonkesy.udptool.ui.HelpDialogBoxButton
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 
 @ExperimentalAnimationApi
@@ -19,17 +18,11 @@ fun MessageCard() {
     val label = "Message"
     CardListCard(
         label = label,
+        dialogText = "",
         content = {
             MessagesCardContent(
                 onTimeoutToggle = {/*TODO*/ },
-                onTimeoutChange = {/*TODO*/ true },
-                helpDialogBoxButton = {
-                    HelpDialogBoxButton(
-                        dialogTitle = label,
-                        dialogText = "text"
-                    )
-                }
-            )
+                onTimeoutChange = {/*TODO*/ true })
         }
     )
 }
@@ -37,10 +30,9 @@ fun MessageCard() {
 @Composable
 fun MessagesCardContent(
     onTimeoutToggle: (isEnabled: Boolean) -> Unit,
-    onTimeoutChange: (text: String) -> Boolean, helpDialogBoxButton: @Composable () -> Unit
+    onTimeoutChange: (text: String) -> Boolean
 ) {
     Column(Modifier.fillMaxWidth()) {
-        helpDialogBoxButton()
         var isTimeoutEnabled by remember { mutableStateOf(true) }
         Row {
             Text("Timeout")

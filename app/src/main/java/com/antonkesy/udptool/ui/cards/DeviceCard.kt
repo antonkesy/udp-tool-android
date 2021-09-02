@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.antonkesy.udptool.ui.HelpDialogBoxButton
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 
 @ExperimentalAnimationApi
@@ -15,15 +14,10 @@ fun DeviceCard() {
     val label = "Device"
     CardListCard(
         label = label,
+        dialogText = "",
         content = {
             DeviceCardContent(
-                onLocalPortValueChanged = {/*TODO*/ true },
-                helpDialogBoxButton = {
-                    HelpDialogBoxButton(
-                        dialogTitle = label,
-                        dialogText = "Text"
-                    )
-                }
+                onLocalPortValueChanged = {/*TODO*/ true }
             )
         }
     )
@@ -31,11 +25,9 @@ fun DeviceCard() {
 
 @Composable
 fun DeviceCardContent(
-    onLocalPortValueChanged: (text: String) -> Boolean, helpDialogBoxButton: @Composable () -> Unit
+    onLocalPortValueChanged: (text: String) -> Boolean
 ) {
-
     Column(Modifier.fillMaxWidth()) {
-        helpDialogBoxButton()
         Text("IP: 0.0.0.0")
         Text("Gateway: 0.0.0.0")
         Text("Network type: LAN")
