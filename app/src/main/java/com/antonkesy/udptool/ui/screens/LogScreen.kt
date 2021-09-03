@@ -1,12 +1,13 @@
 package com.antonkesy.udptool.ui.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 import com.antonkesy.udptool.ui.log.MessagesLogList
 
@@ -27,10 +28,16 @@ fun LogScreen(paddingValues: PaddingValues, logViewModel: MessageLogViewModel) {
 
 @Composable
 fun SendMessageBottomBar() {
-    Row {
-        TextField(value = "", onValueChange = {/*TODO*/ })
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "send")
+    var sendText by remember { mutableStateOf("") }
+    Card(elevation = 3.dp) {
+        Row(Modifier.padding(5.dp), verticalAlignment = Alignment.CenterVertically) {
+            TextField(value = sendText, onValueChange = { sendText = it }, Modifier.weight(1f))
+            IconButton(
+                onClick = { /*TODO*/ },
+                Modifier.wrapContentWidth()
+            ) {
+                Icon(imageVector = Icons.Filled.Send, contentDescription = "send")
+            }
         }
     }
 }
