@@ -3,4 +3,6 @@
     <string name="configure">Configure</string>
     <string name="log">Log</string>
     <string name="splash_screen">Splash Screen</string>
+    <string name="ascii_mode">ASCII</string>
+    <string name="hex_mode">HEX</string>
 </resources>
