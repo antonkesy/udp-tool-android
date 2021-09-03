@@ -53,13 +53,11 @@ fun CardHeaderRow(
             .fillMaxWidth()
             .padding(start = 10.dp)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            CardHeader(label)
-            HelpDialogBoxButton(
-                dialogTitle = label,
-                dialogText = dialogText
-            )
-        }
+        CardHeader(label)
+        HelpDialogBoxButton(
+            dialogTitle = label,
+            dialogText = dialogText
+        )
     }
 
 }
