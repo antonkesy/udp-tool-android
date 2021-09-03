@@ -3,11 +3,9 @@ package com.antonkesy.udptool.ui.cards
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
 import androidx.compose.material.Switch
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 
@@ -32,12 +30,16 @@ fun MessagesCardContent(
 ) {
     Column(Modifier.fillMaxWidth()) {
         var isTimeoutEnabled by remember { mutableStateOf(true) }
-        Row {
-            Text("Timeout")
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            NumberOutlinedTextField(
+                "Timeout",
+                onTimeoutChange,
+                modifier = Modifier.weight(1.0f),
+                isTimeoutEnabled
+            )
             Switch(
                 checked = isTimeoutEnabled,
                 onCheckedChange = { isTimeoutEnabled = it;onTimeoutToggle(it) })
-            NumberOutlinedTextField("Timeout", onTimeoutChange)
         }
     }
 }
