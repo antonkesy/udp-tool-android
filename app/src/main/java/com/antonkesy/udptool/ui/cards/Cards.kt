@@ -1,10 +1,9 @@
 package com.antonkesy.udptool.ui.cards
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -21,13 +20,9 @@ fun CardHeader(label: String) {
 fun CardListCard(
     label: String, dialogText: String, content: @Composable () -> Unit
 ) {
-    var isExtended by remember { mutableStateOf(true) }
     Card(
         modifier = Modifier
-            .padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 6.dp)
-            .clickable {
-                isExtended = !isExtended
-            },
+            .padding(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 6.dp),
         elevation = 10.dp
     ) {
         Column {
