@@ -16,21 +16,24 @@ import androidx.compose.ui.text.input.TextFieldValue
 @Composable
 fun NumberOutlinedTextField(
     label: String,
-    onOutlineTextFieldValueChange: (text: String) -> Boolean,
+    isErroronOutlineTextFieldValueChange: (text: String) -> Boolean,
     modifier: Modifier = Modifier.fillMaxWidth(),
-    isActive: Boolean = true
+    isActive: Boolean = true,
+    value: String = ""
 ) {
-    var textValuePort by remember { mutableStateOf(TextFieldValue()) }
-    var isErrorPort by remember { mutableStateOf(false) }
+    var textValuePort by remember { mutableStateOf(TextFieldValue(value)) }
+    var isErrorInput by remember { mutableStateOf(false) }
     OutlinedTextField(
         value = textValuePort,
-        onValueChange = { textValuePort = it;isErrorPort = onOutlineTextFieldValueChange(it.text) },
+        onValueChange = {
+            textValuePort = it;isErrorInput = isErroronOutlineTextFieldValueChange(it.text)
+        },
         label = { Text(label) },
         maxLines = 1,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         modifier = modifier, trailingIcon = {
-            if (isErrorPort)
+            if (isErrorInput)
                 Icon(Icons.Filled.Error, "error", tint = MaterialTheme.colors.error)
         }, enabled = isActive
     )
