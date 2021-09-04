@@ -29,6 +29,12 @@ class MessageLogViewModel : ViewModel() {
         _localPort.value = newPort
     }
 
+    private val _remotePort = MutableLiveData<Int>()
+    val remotePort: LiveData<Int> = _remotePort
+    fun setRemotePort(newPort: Int) {
+        _remotePort.value = newPort
+    }
+
     private val _bufferSize = MutableLiveData<Int>()
     val bufferSize: LiveData<Int> = _bufferSize
     fun setBufferSize(newSize: Int) {
