@@ -1,17 +1,23 @@
 package com.antonkesy.udptool.ui
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.outlined.AttachFile
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun NumberOutlinedTextField(
@@ -37,4 +43,38 @@ fun NumberOutlinedTextField(
                 Icon(Icons.Filled.Error, "error", tint = MaterialTheme.colors.error)
         }, enabled = isActive
     )
+}
+
+@Composable
+fun MessageSendTextFieldRow(
+    onSendAttachmentClick: () -> Unit,
+    onSendMessageClick: (message: String) -> Unit
+) {
+    var sendText by remember { mutableStateOf("") }
+    Row(Modifier.padding(5.dp), verticalAlignment = Alignment.CenterVertically) {
+        TextField(
+            value = sendText, onValueChange = { sendText = it },
+            Modifier.weight(1f), shape = RoundedCornerShape(8.dp),
+            trailingIcon = {
+                if (sendText.isEmpty()) {
+                    IconButton(onClick = { onSendAttachmentClick() }) {
+                        Icon(
+                            imageVector = Icons.Outlined.AttachFile,
+                            contentDescription = null
+                        )
+                    }
+                }
+            },
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            )
+        )
+        IconButton(
+            onClick = { onSendMessageClick(sendText) },
+            Modifier.wrapContentWidth()
+        ) {
+            Icon(imageVector = Icons.Filled.Send, contentDescription = "send")
+        }
+    }
 }
