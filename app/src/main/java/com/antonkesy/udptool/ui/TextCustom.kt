@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 @Composable
 fun NumberOutlinedTextField(
     label: String,
-    isErroronOutlineTextFieldValueChange: (text: String) -> Boolean,
+    isErrorOnOutlineTextFieldValueChange: (text: String) -> Boolean,
     modifier: Modifier = Modifier.fillMaxWidth(),
     isActive: Boolean = true,
     value: String = ""
@@ -26,7 +26,7 @@ fun NumberOutlinedTextField(
     OutlinedTextField(
         value = textValuePort,
         onValueChange = {
-            textValuePort = it;isErrorInput = isErroronOutlineTextFieldValueChange(it.text)
+            textValuePort = it;isErrorInput = isErrorOnOutlineTextFieldValueChange(it.text)
         },
         label = { Text(label) },
         maxLines = 1,

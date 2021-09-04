@@ -35,7 +35,7 @@ fun DeviceCardContent(
         Text("Network type: $networkType")
         NumberOutlinedTextField(
             label = "Local Port",
-            isErroronOutlineTextFieldValueChange = { setNewLegalPort(it, logViewModel) },
+            isErrorOnOutlineTextFieldValueChange = { setNewLegalPort(it, logViewModel) },
             value = logViewModel.localPort.value.toString()
         )
 
