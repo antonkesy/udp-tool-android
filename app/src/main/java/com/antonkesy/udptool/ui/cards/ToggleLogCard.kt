@@ -6,6 +6,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import com.antonkesy.udptool.ui.NumberOutlinedTextField
 
 @Composable
 fun ToggleLogCard() {
@@ -35,9 +36,19 @@ fun ToggleLogCardContent(
             } else {
                 Text(text = "start logging")
             }
-
         }
-
+        NumberOutlinedTextField(
+            label = "buffer size (byte)",
+            isErrorOnOutlineTextFieldValueChange = { !isStringLegalBufferSize(it) })
     }
 }
 
+fun isStringLegalBufferSize(input: String): Boolean {
+    try {
+        if (Integer.parseInt(input) in 1..Int.MAX_VALUE) {
+            return true
+        }
+    } catch (e: NumberFormatException) {
+    }
+    return false;
+}
