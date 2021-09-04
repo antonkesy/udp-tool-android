@@ -1,8 +1,12 @@
 package com.antonkesy.udptool
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -35,9 +39,18 @@ class MainActivity : ComponentActivity() {
 
     }
 
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val intent = result.data
+                //TODO
+            }
+        }
+
     private fun sendAttachment() {
-        //TODO
+        startForResult.launch(Intent(Intent.ACTION_GET_CONTENT).setType("*/*"))
     }
+
 }
 
 @ExperimentalAnimationApi
