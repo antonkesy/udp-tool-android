@@ -26,7 +26,8 @@ fun HelpDialogBoxButton(
         HelpDialogBox(
             dialogTitle = dialogTitle,
             dialogText = dialogText,
-            onConfirm = { isDialogShown = false })
+            onConfirm = { isDialogShown = false },
+            onDismissRequest = { isDialogShown = false })
     }
 }
 
@@ -34,11 +35,12 @@ fun HelpDialogBoxButton(
 fun HelpDialogBox(
     dialogTitle: String,
     dialogText: String,
-    onConfirm: () -> Unit
+    onConfirm: () -> Unit,
+    onDismissRequest: () -> Unit
 ) {
-
     AlertDialog(
         onDismissRequest = {
+            onDismissRequest()
         },
         title = {
             Text(dialogTitle)
