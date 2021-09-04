@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.antonkesy.udptool.ui.HelpDialogBoxButton
+import com.antonkesy.udptool.ui.dialogs.HelpDialogBoxButton
 
 @Composable
 fun CardHeader(label: String) {

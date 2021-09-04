@@ -1,4 +1,4 @@
-package com.antonkesy.udptool.ui
+package com.antonkesy.udptool.ui.dialogs
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
