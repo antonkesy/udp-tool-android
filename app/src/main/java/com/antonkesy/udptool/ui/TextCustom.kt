@@ -10,7 +10,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Send
-import androidx.compose.material.icons.outlined.AttachFile
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +55,8 @@ fun MessageSendTextFieldRow(
             value = sendText, onValueChange = { sendText = it },
             Modifier.weight(1f), shape = RoundedCornerShape(8.dp),
             trailingIcon = {
+                //todo
+                /*
                 if (sendText.isEmpty()) {
                     IconButton(onClick = { onSendAttachmentClick() }) {
                         Icon(
@@ -63,7 +64,7 @@ fun MessageSendTextFieldRow(
                             contentDescription = null
                         )
                     }
-                }
+                }*/
             },
             colors = TextFieldDefaults.textFieldColors(
                 focusedIndicatorColor = Color.Transparent,
