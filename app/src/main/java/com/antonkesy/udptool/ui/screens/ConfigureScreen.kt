@@ -11,9 +11,10 @@ import com.antonkesy.udptool.ui.cards.DeviceCard
 import com.antonkesy.udptool.ui.cards.MessageCard
 import com.antonkesy.udptool.ui.cards.RemoteCard
 import com.antonkesy.udptool.ui.cards.ToggleLogCard
+import com.antonkesy.udptool.ui.log.MessageLogViewModel
 
 @Composable
-fun ConfigureScreen(paddingValues: PaddingValues) {
+fun ConfigureScreen(paddingValues: PaddingValues,logViewModel: MessageLogViewModel) {
     LazyColumn(
         Modifier
             .padding(paddingValues = paddingValues),
@@ -22,7 +23,7 @@ fun ConfigureScreen(paddingValues: PaddingValues) {
         item {
             DeviceCard()
             RemoteCard()
-            MessageCard()
+            MessageCard(logViewModel)
             ToggleLogCard()
         }
     }

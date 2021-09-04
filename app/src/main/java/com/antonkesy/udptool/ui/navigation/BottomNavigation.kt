@@ -62,7 +62,7 @@ fun Navigation(
             SplashScreen()
         }
         composable(NavCategories.Configure.route) {
-            ConfigureScreen(paddingValues = innerPadding)
+            ConfigureScreen(paddingValues = innerPadding, logViewModel = logViewModel)
         }
         composable(NavCategories.Log.route) {
             LogScreen(paddingValues = innerPadding, logViewModel = logViewModel)

@@ -6,6 +6,7 @@ import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -13,9 +14,10 @@ import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.ASCII
 import com.antonkesy.udptool.ui.log.HEX
 import com.antonkesy.udptool.ui.log.LogMessageCoding
+import com.antonkesy.udptool.ui.log.MessageLogViewModel
 
 @Composable
-fun MessageCard() {
+fun MessageCard(logViewModel: MessageLogViewModel) {
     val label = "Message"
     CardListCard(
         label = label,
@@ -23,7 +25,8 @@ fun MessageCard() {
         content = {
             MessagesCardContent(
                 onTimeoutToggle = {/*TODO*/ },
-                onTimeoutChange = {/*TODO*/ true })
+                onTimeoutChange = {/*TODO*/ true }, logViewModel = logViewModel
+            )
         }
     )
 }
@@ -31,14 +34,29 @@ fun MessageCard() {
 @Composable
 fun MessagesCardContent(
     onTimeoutToggle: (isEnabled: Boolean) -> Unit,
-    onTimeoutChange: (text: String) -> Boolean
+    onTimeoutChange: (text: String) -> Boolean,
+    logViewModel: MessageLogViewModel
 ) {
     Column(
         Modifier
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        val canSendMessages: Boolean by logViewModel.canSendMessages.observeAsState(true)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = "Send messages")
+            Switch(
+                checked = canSendMessages,
+                onCheckedChange = { logViewModel.setCanSendMessages(!canSendMessages) }
+            )
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             var isTimeoutEnabled by remember { mutableStateOf(true) }
             NumberOutlinedTextField(
                 "Timeout",
@@ -47,18 +65,21 @@ fun MessagesCardContent(
                 isTimeoutEnabled
             )
             Switch(
-                checked = isTimeoutEnabled,
+                checked = isTimeoutEnabled && canSendMessages,
                 onCheckedChange = { isTimeoutEnabled = it;onTimeoutToggle(it) })
         }
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Text(text = "Message coding")
-            SwitchLogModeDropDown()
+            SwitchLogModeDropDown(canSendMessages)
         }
     }
 }
 
 @Composable
-fun SwitchLogModeDropDown() {
+fun SwitchLogModeDropDown(isEnabled: Boolean) {
     var expanded by remember { mutableStateOf(false) }
     //todo load from model
     var currentItem by remember { mutableStateOf<LogMessageCoding>(ASCII) }
@@ -67,7 +88,7 @@ fun SwitchLogModeDropDown() {
             .fillMaxSize()
             .wrapContentSize(Alignment.TopStart)
     ) {
-        DropdownMenuItem(onClick = { expanded = true }) {
+        DropdownMenuItem(onClick = { if (isEnabled) expanded = true }, enabled = isEnabled) {
             Text(stringResource(id = currentItem.nameId))
         }
         DropdownMenu(
