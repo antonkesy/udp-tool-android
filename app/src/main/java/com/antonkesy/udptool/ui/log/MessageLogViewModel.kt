@@ -23,6 +23,12 @@ class MessageLogViewModel : ViewModel() {
         _canSendMessages.value = canSendMessages
     }
 
+    private val _localPort = MutableLiveData<Int>()
+    val localPort: LiveData<Int> = _localPort
+    fun setLocalPort(newPort: Int) {
+        _localPort.value = newPort
+    }
+
     fun generateTestLogMessages() {
         viewModelScope.launch {
             val messages = mutableListOf<ILogMessage>()
