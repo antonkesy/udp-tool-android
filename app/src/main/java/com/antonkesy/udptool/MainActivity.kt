@@ -1,6 +1,7 @@
 package com.antonkesy.udptool
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,7 +14,12 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.compose.rememberNavController
+import com.antonkesy.udptool.data.store.loadSavedData
+import com.antonkesy.udptool.data.store.observeToSaveData
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 import com.antonkesy.udptool.ui.navigation.BottomNavigationWithOnlySelectedLabels
 import com.antonkesy.udptool.ui.navigation.NavCategories
@@ -23,6 +29,8 @@ import kotlinx.coroutines.delay
 
 
 class MainActivity : ComponentActivity() {
+
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userdata")
 
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +44,12 @@ class MainActivity : ComponentActivity() {
             MainView(messageViewModel, onSendAttachmentClick = { sendAttachment() }, { "" })
         }
 
-
+        loadSavedData(viewModel = messageViewModel, dataStore = dataStore)
+        observeToSaveData(
+            viewModel = messageViewModel,
+            dataStore = dataStore,
+            lifecycleOwner = this
+        )
     }
 
     private val startForResult =
