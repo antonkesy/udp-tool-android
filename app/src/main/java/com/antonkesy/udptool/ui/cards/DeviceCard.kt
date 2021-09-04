@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.antonkesy.udptool.udp.setNewLocalPort
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 
@@ -35,22 +36,10 @@ fun DeviceCardContent(
         Text("Network type: $networkType")
         NumberOutlinedTextField(
             label = "Local Port",
-            isErrorOnOutlineTextFieldValueChange = { setNewLegalPort(it, logViewModel) },
+            isErrorOnOutlineTextFieldValueChange = { setNewLocalPort(it, logViewModel) },
             value = logViewModel.localPort.value.toString()
         )
 
     }
 }
 
-fun setNewLegalPort(value: String, logViewModel: MessageLogViewModel): Boolean {
-    val intPort: Int
-    try {
-        intPort = Integer.parseInt(value)
-        if (intPort in 0..65_535) {
-            logViewModel.setLocalPort(intPort)
-            return false
-        }
-    } catch (e: NumberFormatException) {
-    }
-    return true
-}
