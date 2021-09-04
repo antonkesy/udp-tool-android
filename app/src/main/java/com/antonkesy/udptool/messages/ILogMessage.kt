@@ -1,4 +1,4 @@
-package com.antonkesy.udptool.data
+package com.antonkesy.udptool.messages
 
 interface ILogMessage {
     val message: String

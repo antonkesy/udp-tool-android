@@ -14,7 +14,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.antonkesy.udptool.data.ILogMessage
+import com.antonkesy.udptool.messages.ILogMessage
 
 
 @Composable

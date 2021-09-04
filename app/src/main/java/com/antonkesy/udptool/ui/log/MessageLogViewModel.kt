@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antonkesy.udptool.data.DeviceLogMessage
-import com.antonkesy.udptool.data.ILogMessage
+import com.antonkesy.udptool.messages.ILogMessage
 import kotlinx.coroutines.launch
 
 class MessageLogViewModel : ViewModel() {
