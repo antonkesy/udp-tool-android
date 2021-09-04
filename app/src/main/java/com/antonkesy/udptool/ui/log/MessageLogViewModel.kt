@@ -17,6 +17,12 @@ class MessageLogViewModel : ViewModel() {
         _logMessages.value = newLogs
     }
 
+    private val _canSendMessages = MutableLiveData<Boolean>()
+    val canSendMessages: LiveData<Boolean> = _canSendMessages
+    fun setCanSendMessages(canSendMessages: Boolean) {
+        _canSendMessages.value = canSendMessages
+    }
+
     fun generateTestLogMessages() {
         viewModelScope.launch {
             val messages = mutableListOf<ILogMessage>()
