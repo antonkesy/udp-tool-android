@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
+import com.antonkesy.udptool.ui.dialogs.ClearLogDialogBox
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 
 @Composable
@@ -35,6 +36,7 @@ fun ToggleLogCardContent(
 ) {
     Column(Modifier.fillMaxWidth()) {
         SetBufferSize(viewModel)
+        ClearLogButton(viewModel = viewModel)
         ToggleLoggingButton(isLogging = isLogging, onLoggingToggleClick = onLoggingToggleClick)
     }
 }
@@ -73,4 +75,19 @@ fun isStringLegalBufferSize(input: String): Boolean {
     } catch (e: NumberFormatException) {
     }
     return false;
+}
+
+@Composable
+fun ClearLogButton(viewModel: MessageLogViewModel) {
+    var isOpen by remember { mutableStateOf(false) }
+    Button(onClick = { isOpen = true }) {
+        Text("Clear log")
+    }
+    ClearLogDialogBox(
+        isOpen = isOpen,
+        onConfirm = {
+            viewModel.setLogMessages(mutableListOf())
+            isOpen = false
+        },
+        onDismissRequest = { isOpen = false })
 }
