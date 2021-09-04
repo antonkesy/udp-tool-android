@@ -55,7 +55,9 @@ fun BottomNavigationWithOnlySelectedLabels(
 fun Navigation(
     navController: NavHostController,
     innerPadding: PaddingValues,
-    logViewModel: MessageLogViewModel
+    logViewModel: MessageLogViewModel,
+    onSendAttachmentClick: () -> Unit,
+    onSendMessageClick: (message: String) -> Unit
 ) {
     NavHost(navController, startDestination = NavCategories.Splash.route) {
         composable(NavCategories.Splash.route) {
@@ -65,7 +67,12 @@ fun Navigation(
             ConfigureScreen(paddingValues = innerPadding, logViewModel = logViewModel)
         }
         composable(NavCategories.Log.route) {
-            LogScreen(paddingValues = innerPadding, logViewModel = logViewModel)
+            LogScreen(
+                paddingValues = innerPadding,
+                logViewModel = logViewModel,
+                onSendAttachmentClick,
+                onSendMessageClick
+            )
         }
 
     }

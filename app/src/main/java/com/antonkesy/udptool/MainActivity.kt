@@ -1,7 +1,6 @@
 package com.antonkesy.udptool
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -18,6 +17,7 @@ import com.antonkesy.udptool.ui.navigation.Navigation
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
 import kotlinx.coroutines.delay
 
+
 class MainActivity : ComponentActivity() {
 
     @ExperimentalAnimationApi
@@ -29,14 +29,23 @@ class MainActivity : ComponentActivity() {
         messageViewModel.generateTestLogMessages()
 
         setContent {
-            MainView(messageViewModel)
+            MainView(messageViewModel, onSendAttachmentClick = { sendAttachment() }, { "" })
         }
+
+
+    }
+
+    private fun sendAttachment() {
+        //TODO
     }
 }
 
 @ExperimentalAnimationApi
 @Composable
-fun MainView(logViewModel: MessageLogViewModel) {
+fun MainView(
+    logViewModel: MessageLogViewModel, onSendAttachmentClick: () -> Unit,
+    onSendMessageClick: (message: String) -> Unit
+) {
     var isSplashScreenShowing by remember { mutableStateOf(true) }
     UDPToolTheme {
         val navController = rememberNavController()
@@ -64,7 +73,13 @@ fun MainView(logViewModel: MessageLogViewModel) {
                 )
             }
         }) { innerPadding ->
-            Navigation(navController = navController, innerPadding = innerPadding, logViewModel)
+            Navigation(
+                navController = navController,
+                innerPadding = innerPadding,
+                logViewModel = logViewModel,
+                onSendAttachmentClick = onSendAttachmentClick,
+                onSendMessageClick = onSendMessageClick
+            )
         }
     }
 }
