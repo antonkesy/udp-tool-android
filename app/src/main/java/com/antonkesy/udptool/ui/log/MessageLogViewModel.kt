@@ -29,6 +29,12 @@ class MessageLogViewModel : ViewModel() {
         _localPort.value = newPort
     }
 
+    private val _bufferSize = MutableLiveData<Int>()
+    val bufferSize: LiveData<Int> = _bufferSize
+    fun setBufferSize(newSize: Int) {
+        _bufferSize.value = newSize
+    }
+
     fun generateTestLogMessages() {
         viewModelScope.launch {
             val messages = mutableListOf<ILogMessage>()
