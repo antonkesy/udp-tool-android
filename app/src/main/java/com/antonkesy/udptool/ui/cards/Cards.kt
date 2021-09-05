@@ -2,6 +2,7 @@ package com.antonkesy.udptool.ui.cards
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,8 +18,34 @@ fun CardHeader(label: String) {
 }
 
 @Composable
+fun CardHeaderSwitch(
+    label: String,
+    isChecked: Boolean,
+    onCheckedChange: (isChecked: Boolean) -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start
+    ) {
+        Text(
+            label,
+            fontWeight = FontWeight.Bold,
+            fontSize = 17.sp,
+            modifier = Modifier.padding(end = 12.dp)
+        )
+        Switch(
+            checked = isChecked,
+            onCheckedChange = onCheckedChange
+        )
+    }
+}
+
+@Composable
 fun CardListCard(
-    label: String, dialogText: String, content: @Composable () -> Unit
+    label: String,
+    dialogText: String,
+    cardHeader: @Composable (label: String) -> Unit,
+    content: @Composable () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -29,7 +56,8 @@ fun CardListCard(
             CardContent(
                 title = label,
                 dialogText = dialogText,
-                content = content
+                content = content,
+                cardHeader = cardHeader
             )
         }
     }
@@ -39,7 +67,7 @@ fun CardListCard(
 @Composable
 fun CardHeaderRow(
     label: String,
-    dialogText: String
+    dialogText: String, cardHeader: @Composable (label: String) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -48,7 +76,7 @@ fun CardHeaderRow(
             .fillMaxWidth()
             .padding(start = 10.dp)
     ) {
-        CardHeader(label)
+        cardHeader(label)
         HelpDialogBoxButton(
             dialogTitle = label,
             dialogText = dialogText
@@ -61,11 +89,13 @@ fun CardHeaderRow(
 fun CardContent(
     title: String,
     dialogText: String,
+    cardHeader: @Composable (label: String) -> Unit,
     content: @Composable () -> Unit
 ) {
     CardHeaderRow(
         label = title,
-        dialogText = dialogText
+        dialogText = dialogText,
+        cardHeader = cardHeader
     )
     Column(
         modifier = Modifier

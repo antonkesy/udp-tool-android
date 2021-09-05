@@ -16,6 +16,7 @@ fun LogInfoCard(logViewModel: MessageLogViewModel) {
     CardListCard(
         label = label,
         dialogText = "",
+        cardHeader = { CardHeader(label = label) },
         content = {
             LogInfoCardContent(
                 viewModel = logViewModel

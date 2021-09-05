@@ -17,6 +17,7 @@ fun DeviceCard(logViewModel: MessageLogViewModel) {
     CardListCard(
         label = label,
         dialogText = "",
+        cardHeader = { CardHeader(label = label) },
         content = {
             DeviceCardContent(logViewModel)
         }

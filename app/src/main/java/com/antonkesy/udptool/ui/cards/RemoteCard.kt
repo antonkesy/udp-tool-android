@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.antonkesy.udptool.util.setNewRemoteIP
-import com.antonkesy.udptool.util.setNewRemotePort
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
+import com.antonkesy.udptool.util.setNewRemoteIP
+import com.antonkesy.udptool.util.setNewRemotePort
 
 @Composable
 fun RemoteCard(viewModel: MessageLogViewModel) {
@@ -15,6 +15,7 @@ fun RemoteCard(viewModel: MessageLogViewModel) {
     CardListCard(
         label = label,
         dialogText = "",
+        cardHeader = { CardHeader(label = label) },
         content = {
             RemoteContent(
                 viewModel = viewModel

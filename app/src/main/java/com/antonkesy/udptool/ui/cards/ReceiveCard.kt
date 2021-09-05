@@ -2,7 +2,6 @@ package com.antonkesy.udptool.ui.cards
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Switch
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -17,6 +16,12 @@ fun ReceiveCard(logViewModel: MessageLogViewModel) {
     CardListCard(
         label = label,
         dialogText = "",
+        cardHeader = {
+            val isListening by logViewModel.isListening.observeAsState(true)
+            CardHeaderSwitch(label = label, isChecked = isListening, onCheckedChange = {
+                logViewModel.setIsListening(it)
+            })
+        },
         content = {
             ReceiveCardContent(
                 logViewModel = logViewModel
@@ -29,6 +34,8 @@ fun ReceiveCard(logViewModel: MessageLogViewModel) {
 fun ReceiveCardContent(
     logViewModel: MessageLogViewModel
 ) {
+    val isListening by logViewModel.isListening.observeAsState(true)
+    val isListenInterval by logViewModel.isListeningInterval.observeAsState(true)
     Column(
         Modifier
             .fillMaxWidth()
@@ -38,23 +45,10 @@ fun ReceiveCardContent(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Listen for messages")
-            val isMsg by logViewModel.isListening.observeAsState(true)
-            Switch(
-                checked = isMsg,
-                onCheckedChange = {
-                    logViewModel.setIsListening(it)
-                }
-            )
-        }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
             NumberOutlinedTextField(
                 "Listen interval",
                 modifier = Modifier.weight(1.0f),
-                isActive = logViewModel.isListening.value == true && logViewModel.isListeningInterval.value == true,
+                isActive = isListening && isListenInterval,
                 value = logViewModel.listenInterval.value.toString(),
                 isErrorOnOutlineTextFieldValueChange = {
                     if (isTimeOutLegal(it)) {
@@ -65,9 +59,9 @@ fun ReceiveCardContent(
                     }
                 }
             )
-            val isListening by logViewModel.isListeningInterval.observeAsState(true)
             Switch(
-                checked = isListening && logViewModel.isListening.value == true,
+                checked = isListening && isListenInterval,
+                enabled = isListening,
                 onCheckedChange = { logViewModel.setIsListeningInterval(it) })
         }
     }

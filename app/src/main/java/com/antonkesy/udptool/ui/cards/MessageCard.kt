@@ -23,6 +23,12 @@ fun MessageCard(logViewModel: MessageLogViewModel) {
     CardListCard(
         label = label,
         dialogText = "",
+        cardHeader = {
+            val isMsg by logViewModel.isMessage.observeAsState(true)
+            CardHeaderSwitch(label = label, isChecked = isMsg, onCheckedChange = {
+                logViewModel.setIsMessage(it)
+            })
+        },
         content = {
             MessagesCardContent(
                 logViewModel = logViewModel
@@ -30,6 +36,7 @@ fun MessageCard(logViewModel: MessageLogViewModel) {
         }
     )
 }
+
 
 @Composable
 fun MessagesCardContent(
@@ -40,19 +47,8 @@ fun MessagesCardContent(
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(text = "Send messages")
-            val isMsg by logViewModel.isMessage.observeAsState(true)
-            Switch(
-                checked = isMsg,
-                onCheckedChange = {
-                    logViewModel.setIsMessage(it)
-                }
-            )
-        }
+        val isMsg by logViewModel.isMessage.observeAsState(true)
+        val isTimeOut by logViewModel.isTimeOutTime.observeAsState(true)
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -60,7 +56,7 @@ fun MessagesCardContent(
             NumberOutlinedTextField(
                 "Timeout",
                 modifier = Modifier.weight(1.0f),
-                isActive = logViewModel.isTimeOutTime.value == true,
+                isActive = isTimeOut && isMsg,
                 value = logViewModel.timeOutTime.value.toString(),
                 isErrorOnOutlineTextFieldValueChange = {
                     if (isTimeOutLegal(it)) {
@@ -71,9 +67,9 @@ fun MessagesCardContent(
                     }
                 }
             )
-            val isTimeout by logViewModel.isTimeOutTime.observeAsState(true)
             Switch(
-                checked = isTimeout && logViewModel.isMessage.value == true,
+                checked = isTimeOut && isMsg,
+                enabled = isMsg,
                 onCheckedChange = { logViewModel.setIsTimeOutTime(it) })
         }
         Row(
@@ -81,7 +77,7 @@ fun MessagesCardContent(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(text = "Message coding")
-            SwitchLogModeDropDown(logViewModel.isMessage.value == true)
+            SwitchLogModeDropDown(isMsg)
         }
     }
 }
