@@ -25,7 +25,7 @@ fun MessageCard(logViewModel: MessageLogViewModel) {
         content = {
             MessagesCardContent(
                 onTimeoutToggle = {/*TODO*/ },
-                onTimeoutChange = {/*TODO*/ true }, logViewModel = logViewModel
+                logViewModel = logViewModel
             )
         }
     )
@@ -34,7 +34,6 @@ fun MessageCard(logViewModel: MessageLogViewModel) {
 @Composable
 fun MessagesCardContent(
     onTimeoutToggle: (isEnabled: Boolean) -> Unit,
-    onTimeoutChange: (text: String) -> Boolean,
     logViewModel: MessageLogViewModel
 ) {
     Column(
@@ -60,9 +59,17 @@ fun MessagesCardContent(
             var isTimeoutEnabled by remember { mutableStateOf(true) }
             NumberOutlinedTextField(
                 "Timeout",
-                onTimeoutChange,
                 modifier = Modifier.weight(1.0f),
-                isTimeoutEnabled
+                isActive = isTimeoutEnabled,
+                value = logViewModel.timeOutTime.value.toString(),
+                isErrorOnOutlineTextFieldValueChange = {
+                    if (isTimeOutLegal(it)) {
+                        logViewModel.setTimeOutTime(Integer.parseInt(it))
+                        return@NumberOutlinedTextField false
+                    } else {
+                        return@NumberOutlinedTextField true
+                    }
+                }
             )
             Switch(
                 checked = isTimeoutEnabled && canSendMessages,
@@ -109,4 +116,15 @@ fun SwitchLogModeDropDown(isEnabled: Boolean) {
             }
         }
     }
+}
+
+
+fun isTimeOutLegal(value: String): Boolean {
+    try {
+        if (Integer.parseInt(value) in 0..Int.MAX_VALUE) {
+            return true
+        }
+    } catch (e: NumberFormatException) {
+    }
+    return false
 }
