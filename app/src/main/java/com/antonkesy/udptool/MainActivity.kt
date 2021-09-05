@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
@@ -20,16 +21,21 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.compose.rememberNavController
 import com.antonkesy.udptool.data.store.loadSavedData
 import com.antonkesy.udptool.data.store.observeToSaveData
+import com.antonkesy.udptool.udp.IUDPThreadExceptions
+import com.antonkesy.udptool.udp.UDPSendReceive
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 import com.antonkesy.udptool.ui.navigation.BottomNavigationWithOnlySelectedLabels
 import com.antonkesy.udptool.ui.navigation.NavCategories
 import com.antonkesy.udptool.ui.navigation.Navigation
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
 import kotlinx.coroutines.delay
+import java.net.InetAddress
 
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), IUDPThreadExceptions {
 
+    private lateinit var socket: UDPSendReceive
+    private lateinit var socketThread: Thread
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userdata")
 
     @ExperimentalAnimationApi
@@ -45,11 +51,15 @@ class MainActivity : ComponentActivity() {
         }
 
         loadSavedData(viewModel = messageViewModel, dataStore = dataStore)
+
         observeToSaveData(
             viewModel = messageViewModel,
             dataStore = dataStore,
             lifecycleOwner = this
         )
+
+        createSocketThread(logViewModel = messageViewModel)
+
     }
 
     private val startForResult =
@@ -64,6 +74,40 @@ class MainActivity : ComponentActivity() {
         startForResult.launch(Intent(Intent.ACTION_GET_CONTENT).setType("*/*"))
     }
 
+    private fun createSocketThread(logViewModel: MessageLogViewModel) {
+        if (::socketThread.isInitialized) {
+            socket.kill()
+        }
+        try {
+            socket = UDPSendReceive(
+                logViewModel.localPort.value!!,
+                logViewModel.remotePort.value!!,
+                InetAddress.getByName(logViewModel.remoteIP.value),
+                logViewModel.isTimeOutTime.value!!,
+                logViewModel.timeOutTime.value!!,
+                logViewModel.bufferSize.value!!,
+                this
+            )
+            socketThread = Thread(socket)
+            socketThread.start()
+
+        } catch (e: Exception) {
+            //TODO show user error
+            Log.e("thread", "null pointer")
+        }
+    }
+
+    override fun socketTimeOut() {
+        Log.e("thread", "socket timeout")
+    }
+
+    override fun io() {
+        Log.e("thread", "io")
+    }
+
+    override fun socket() {
+        Log.e("thread", "socket")
+    }
 }
 
 @ExperimentalAnimationApi
