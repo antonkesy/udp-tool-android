@@ -21,6 +21,7 @@ fun ConfigureScreen(paddingValues: PaddingValues, logViewModel: MessageLogViewMo
             DeviceCard(info = DeviceInfo("0.0.0.0", "0.0.0.0", "LAN"), logViewModel = logViewModel)
             RemoteCard(viewModel = logViewModel)
             MessageCard(logViewModel = logViewModel)
+            ReceiveCard(logViewModel = logViewModel)
             LogInfoCard(logViewModel = logViewModel)
         }
     }
