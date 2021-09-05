@@ -79,3 +79,21 @@ fun MessageSendTextFieldRow(
         }
     }
 }
+
+@Composable
+fun FakeOutlinedTextField(
+    label: String,
+    modifier: Modifier = Modifier.fillMaxWidth(),
+    isActive: Boolean = false,
+    value: String = ""
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = { },
+        label = { Text(label) },
+        maxLines = 1,
+        singleLine = true,
+        modifier = modifier,
+        enabled = isActive
+    )
+}
