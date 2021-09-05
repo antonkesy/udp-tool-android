@@ -1,4 +1,4 @@
-package com.antonkesy.udptool.udp
+package com.antonkesy.udptool.util
 
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 

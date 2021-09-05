@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.antonkesy.udptool.udp.setNewRemoteIP
-import com.antonkesy.udptool.udp.setNewRemotePort
+import com.antonkesy.udptool.util.setNewRemoteIP
+import com.antonkesy.udptool.util.setNewRemotePort
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 
