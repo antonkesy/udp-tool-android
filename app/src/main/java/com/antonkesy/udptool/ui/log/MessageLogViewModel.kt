@@ -75,5 +75,17 @@ class MessageLogViewModel : ViewModel() {
             _logMessages.postValue(messages)
         }
     }
+    
+    private val _isListening = MutableLiveData<Boolean>()
+    val isListening: LiveData<Boolean> = _isListening
+    fun setIsListening(newValue: Boolean) {
+        _isListening.value = newValue
+    }
+
+    private val _listenInterval = MutableLiveData<Int>()
+    val listenInterval: LiveData<Int> = _listenInterval
+    fun setListenInterval(newSize: Int) {
+        _listenInterval.value = newSize
+    }
 
 }
