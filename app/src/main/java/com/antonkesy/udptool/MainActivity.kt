@@ -21,6 +21,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.compose.rememberNavController
 import com.antonkesy.udptool.data.store.loadSavedData
 import com.antonkesy.udptool.data.store.observeToSaveData
+import com.antonkesy.udptool.messages.SocketLogMessage
 import com.antonkesy.udptool.udp.ISocketResponses
 import com.antonkesy.udptool.udp.UDPSendReceive
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
@@ -42,14 +43,14 @@ class MainActivity : ComponentActivity(), ISocketResponses {
     private lateinit var socket: UDPSendReceive
     private lateinit var socketThread: Thread
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userdata")
+    private lateinit var viewModel: MessageLogViewModel
 
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val messageViewModel: MessageLogViewModel by viewModels()
-
-        messageViewModel.generateTestLogMessages()
+        viewModel = messageViewModel
 
         setContent {
             MainView(
@@ -116,19 +117,31 @@ class MainActivity : ComponentActivity(), ISocketResponses {
     }
 
     override fun socketTimeOut() {
-        Log.e("thread", "socket timeout")
+        viewModel.addLogMessage(SocketLogMessage.TIMEOUT)
     }
 
     override fun ioException() {
-        Log.e("thread", "io")
+        viewModel.addLogMessage(SocketLogMessage.IOEXCEPTION)
     }
 
     override fun socketException() {
-        Log.e("thread", "socket")
+        viewModel.addLogMessage(SocketLogMessage.EXCEPTION)
     }
 
     override fun dataReceived(data: ByteArray) {
-        Log.e("thread", "data received")
+        viewModel.addLogMessage(SocketLogMessage.RECEIVED)
+    }
+
+    override fun socketStart() {
+        viewModel.addLogMessage(SocketLogMessage.START)
+    }
+
+    override fun socketClosed() {
+        viewModel.addLogMessage(SocketLogMessage.CLOSED)
+    }
+
+    override fun sendPacket(data: ByteArray) {
+        viewModel.addLogMessage(SocketLogMessage.SEND)
     }
 
     private fun sendMessage(message: String) {
