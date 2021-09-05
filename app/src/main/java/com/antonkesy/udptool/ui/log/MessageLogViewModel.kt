@@ -35,10 +35,41 @@ class MessageLogViewModel : ViewModel() {
         _remotePort.value = newPort
     }
 
+    private val _remoteIP = MutableLiveData<String>()
+    val remoteIP: LiveData<String> = _remoteIP
+    fun setRemoteIP(newIP: String) {
+        _remoteIP.value = newIP
+    }
+
     private val _bufferSize = MutableLiveData<Int>()
     val bufferSize: LiveData<Int> = _bufferSize
     fun setBufferSize(newSize: Int) {
         _bufferSize.value = newSize
+    }
+
+    private val _timeOutTime = MutableLiveData<Int>()
+    val timeOutTime: LiveData<Int> = _timeOutTime
+    fun setTimeOutTime(newSize: Int) {
+        _timeOutTime.value = newSize
+    }
+
+    private val _messageCoding = MutableLiveData<LogMessageCoding>()
+    val messageCoding: LiveData<LogMessageCoding> = _messageCoding
+    fun setMessageCoding(newValue: LogMessageCoding) {
+        _messageCoding.value = newValue
+    }
+
+
+    private val _isTimeOutTime = MutableLiveData<Boolean>()
+    val isTimeOutTime: LiveData<Boolean> = _isTimeOutTime
+    fun setIsTimeOutTime(newValue: Boolean) {
+        _isTimeOutTime.value = newValue
+    }
+
+    private val _isMessage = MutableLiveData<Boolean>()
+    val isMessage: LiveData<Boolean> = _isMessage
+    fun setIsMessage(newValue: Boolean) {
+        _isMessage.value = newValue
     }
 
     fun generateTestLogMessages() {
