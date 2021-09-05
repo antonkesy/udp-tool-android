@@ -1,11 +1,15 @@
 package com.antonkesy.udptool.ui.cards
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import com.antonkesy.udptool.R
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.dialogs.ClearLogDialogBox
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
@@ -31,7 +35,9 @@ fun LogInfoCardContent(
 ) {
     Column(Modifier.fillMaxWidth()) {
         SetBufferSize(viewModel)
-        ClearLogButton(viewModel = viewModel)
+        Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(top = 12.dp)) {
+            ClearLogButton(viewModel = viewModel)
+        }
     }
 }
 
@@ -65,7 +71,16 @@ fun isStringLegalBufferSize(input: String): Boolean {
 fun ClearLogButton(viewModel: MessageLogViewModel) {
     var isOpen by remember { mutableStateOf(false) }
     Button(onClick = { isOpen = true }) {
-        Text("Clear log")
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_baseline_clear_24),
+                contentDescription = ""
+            )
+            Text("Clear log")
+        }
     }
     ClearLogDialogBox(
         isOpen = isOpen,

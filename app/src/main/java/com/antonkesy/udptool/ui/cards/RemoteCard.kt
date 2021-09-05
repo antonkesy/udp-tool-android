@@ -1,9 +1,9 @@
 package com.antonkesy.udptool.ui.cards
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 import com.antonkesy.udptool.util.setNewRemoteIP
@@ -33,9 +33,11 @@ fun RemoteContent(
             "IP",
             value = viewModel.remoteIP.value.toString(),
             isErrorOnOutlineTextFieldValueChange = { setNewRemoteIP(it, viewModel) })
-        NumberOutlinedTextField(
-            "Port",
-            value = viewModel.remotePort.value.toString(),
-            isErrorOnOutlineTextFieldValueChange = { setNewRemotePort(it, viewModel) })
+        Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(top = 12.dp)) {
+            NumberOutlinedTextField(
+                "Port",
+                value = viewModel.remotePort.value.toString(),
+                isErrorOnOutlineTextFieldValueChange = { setNewRemotePort(it, viewModel) })
+        }
     }
 }

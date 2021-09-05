@@ -1,11 +1,11 @@
 package com.antonkesy.udptool.ui.cards
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.antonkesy.udptool.ui.FakeOutlinedTextField
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
@@ -34,12 +34,13 @@ fun DeviceCardContent(
             label = "IP",
             value = ip
         )
-        NumberOutlinedTextField(
-            label = "Local Port",
-            isErrorOnOutlineTextFieldValueChange = { setNewLocalPort(it, logViewModel) },
-            value = logViewModel.localPort.value.toString()
-        )
-
+        Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(top = 12.dp)) {
+            NumberOutlinedTextField(
+                label = "Local Port",
+                isErrorOnOutlineTextFieldValueChange = { setNewLocalPort(it, logViewModel) },
+                value = logViewModel.localPort.value.toString()
+            )
+        }
     }
 }
 
