@@ -28,6 +28,7 @@ import com.antonkesy.udptool.ui.navigation.BottomNavigationWithOnlySelectedLabel
 import com.antonkesy.udptool.ui.navigation.NavCategories
 import com.antonkesy.udptool.ui.navigation.Navigation
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
+import com.antonkesy.udptool.util.addSocketHotUpdate
 import kotlinx.coroutines.delay
 import java.net.InetAddress
 
@@ -62,6 +63,11 @@ class MainActivity : ComponentActivity(), ISocketResponses {
         )
 
         createSocketThread(logViewModel = messageViewModel)
+        addSocketHotUpdate(
+            logViewModel = messageViewModel,
+            lifecycleOwner = this,
+            { createSocketThread(logViewModel = messageViewModel) }
+        )
 
     }
 
@@ -89,6 +95,9 @@ class MainActivity : ComponentActivity(), ISocketResponses {
                 logViewModel.isTimeOutTime.value!!,
                 logViewModel.timeOutTime.value!!,
                 logViewModel.bufferSize.value!!,
+                logViewModel.listenInterval.value!!,
+                logViewModel.isListening.value!!,
+                logViewModel.isListeningInterval.value!!,
                 this
             )
             socketThread = Thread(socket)
