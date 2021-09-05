@@ -3,10 +3,10 @@ package com.antonkesy.udptool.messages
 import java.text.SimpleDateFormat
 import java.util.*
 
-sealed class SocketLogMessage(override val message: String, override val time: String) :
+sealed class SocketLogMessage(override val info: String, override val time: String) :
     ILogMessage {
     constructor(message: String) : this(
-        message = message,
+        info = message,
         SimpleDateFormat("HH:mm:ss.SSS").format(Date().time)
     )
 

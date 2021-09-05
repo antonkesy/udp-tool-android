@@ -44,7 +44,7 @@ fun MessageLogItem(message: ILogMessage) {
             maxLines = 1
         )
         Text(
-            text = message.message,
+            text = message.info,
             textAlign = TextAlign.Start,
             maxLines = 1,
             modifier = Modifier

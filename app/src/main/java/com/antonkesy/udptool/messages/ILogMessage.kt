@@ -1,6 +1,6 @@
 package com.antonkesy.udptool.messages
 
 interface ILogMessage {
-    val message: String
+    val info: String
     val time: String
 }
