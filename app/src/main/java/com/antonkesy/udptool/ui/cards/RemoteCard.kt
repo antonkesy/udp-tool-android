@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.antonkesy.udptool.udp.setNewRemoteIP
 import com.antonkesy.udptool.udp.setNewRemotePort
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
@@ -16,7 +17,6 @@ fun RemoteCard(viewModel: MessageLogViewModel) {
         dialogText = "",
         content = {
             RemoteContent(
-                onRemoteIPChange = {/*TODO*/true },
                 viewModel = viewModel
             )
         }
@@ -25,11 +25,13 @@ fun RemoteCard(viewModel: MessageLogViewModel) {
 
 @Composable
 fun RemoteContent(
-    onRemoteIPChange: (ip: String) -> Boolean,
     viewModel: MessageLogViewModel
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        NumberOutlinedTextField("IP", onRemoteIPChange)
+        NumberOutlinedTextField(
+            "IP",
+            value = viewModel.remoteIP.value.toString(),
+            isErrorOnOutlineTextFieldValueChange = { setNewRemoteIP(it, viewModel) })
         NumberOutlinedTextField(
             "Port",
             value = viewModel.remotePort.value.toString(),
