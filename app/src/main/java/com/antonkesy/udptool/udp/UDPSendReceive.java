@@ -1,8 +1,6 @@
 package com.antonkesy.udptool.udp;
 
-import android.util.Log;
-
-import com.antonkesy.udptool.util.Utils;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -10,6 +8,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class UDPSendReceive implements Runnable {
     private boolean isRunning = true;
@@ -20,57 +20,99 @@ public class UDPSendReceive implements Runnable {
     private final boolean isTimeoutEnabled;
     private final int timeoutTime;
     private final int bufferSize;
+    private final int listenInterval;
+    private final boolean isListening;
+    private final boolean isListeningInterval;
 
     private final ISocketResponses socketResponseHandler;
 
-    public UDPSendReceive(int localPort, int remotePort, InetAddress remoteAddress, boolean isTimeoutEnabled, int timeoutTime, int bufferSize, ISocketResponses socketResponseHandler) {
+    private DatagramSocket udpSocket;
+    byte[] buffer;
+    DatagramPacket packet;
+
+    private final Queue<byte[]> messageQue = new LinkedList<>();
+
+    public UDPSendReceive(int localPort, int remotePort, InetAddress remoteAddress, boolean isTimeoutEnabled, int timeoutTime, int bufferSize, int listenInterval, boolean isListening, boolean isListeningInterval, ISocketResponses socketResponseHandler) {
         this.localPort = localPort;
         this.remotePort = remotePort;
         this.remoteAddress = remoteAddress;
         this.isTimeoutEnabled = isTimeoutEnabled;
         this.timeoutTime = timeoutTime;
         this.bufferSize = bufferSize;
+        this.listenInterval = listenInterval;
+        this.isListening = isListening;
+        this.isListeningInterval = isListeningInterval;
         this.socketResponseHandler = socketResponseHandler;
     }
 
     @Override
     public void run() {
         try {
-            Log.e("UDP", "start");
-            DatagramSocket udpSocket = new DatagramSocket(localPort);
-            byte[] buffer = new byte[bufferSize];
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, remoteAddress, remotePort);
-            udpSocket.send(packet);
-            Log.e("UDP", "send packet");
+            if (udpSocket != null) {
+                udpSocket.close();
+            }
+            udpSocket = new DatagramSocket(localPort);
+            socketResponseHandler.socketStart();
+            buffer = new byte[bufferSize];
+            packet = new DatagramPacket(buffer, buffer.length, remoteAddress, remotePort);
             while (isRunning) {
+                if (messageQue.size() > 0) {
+                    sendNextMessage();
+                }
                 try {
-                    if (isTimeoutEnabled) {
-                        Log.e("UDP", "about to wait to receive " + timeoutTime + "ms");
-                        udpSocket.setSoTimeout(timeoutTime);
-                    }
-                    udpSocket.receive(packet);
-                    socketResponseHandler.dataReceived(Utils.byteToByte(packet.getData()));
+                    listenForMessages();
                 } catch (SocketTimeoutException e) {
-                    Log.e("Timeout Exception", "UDP Connection:", e);
                     socketResponseHandler.socketTimeOut();
                 } catch (IOException e) {
-                    Log.e("UDP client IOException", "error: ", e);
                     isRunning = false;
                     udpSocket.close();
                     socketResponseHandler.ioException();
+                    socketResponseHandler.socketClosed();
                 }
             }
         } catch (SocketException e) {
-            Log.e("Socket Open:", "Error:", e);
             socketResponseHandler.socketException();
+        }
+    }
+
+    private void sendNextMessage() {
+        byte[] nextMessageContent = messageQue.poll();
+        assert nextMessageContent != null;
+        DatagramPacket packet = new DatagramPacket(nextMessageContent, nextMessageContent.length, remoteAddress, remotePort);
+        try {
+            udpSocket.send(packet);
+            socketResponseHandler.sendPacket(packet.getData());
+            if (isTimeoutEnabled) {
+                udpSocket.setSoTimeout(timeoutTime);
+                udpSocket.receive(packet);
+                socketResponseHandler.dataReceived(packet.getData());
+            }
+        } catch (SocketTimeoutException e) {
+            socketResponseHandler.socketTimeOut();
         } catch (IOException e) {
-            e.printStackTrace();
             socketResponseHandler.ioException();
         }
     }
 
+    private void listenForMessages() throws SocketTimeoutException, IOException {
+        if (isListening) {
+            if (isListeningInterval) {
+                udpSocket.setSoTimeout(listenInterval);
+            }
+            udpSocket.receive(packet);
+            socketResponseHandler.dataReceived(packet.getData());
+        }
+    }
+
     public void kill() {
+        if (udpSocket != null) {
+            udpSocket.close();
+        }
+        messageQue.clear();
         isRunning = false;
     }
 
+    public void addMessageToQue(@NotNull byte[] newMessage) {
+        messageQue.add(newMessage);
+    }
 }
