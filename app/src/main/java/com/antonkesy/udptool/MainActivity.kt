@@ -47,7 +47,10 @@ class MainActivity : ComponentActivity(), ISocketResponses {
         messageViewModel.generateTestLogMessages()
 
         setContent {
-            MainView(messageViewModel, onSendAttachmentClick = { sendAttachment() }, { "" })
+            MainView(
+                messageViewModel,
+                onSendAttachmentClick = { sendAttachment() },
+                { sendMessage(it) })
         }
 
         loadSavedData(viewModel = messageViewModel, dataStore = dataStore)
@@ -109,8 +112,16 @@ class MainActivity : ComponentActivity(), ISocketResponses {
         Log.e("thread", "socket")
     }
 
-    override fun dataReceived(data: Array<Byte>) {
+    override fun dataReceived(data: ByteArray) {
         Log.e("thread", "data received")
+    }
+
+    private fun sendMessage(message: String) {
+        if (::socket.isInitialized) {
+            Log.e("send", "try to send $message")
+            val byteArray = message.toByteArray()
+            socket.addMessageToQue(byteArray)
+        }
     }
 }
 
