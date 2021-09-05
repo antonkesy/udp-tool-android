@@ -15,10 +15,11 @@ import com.antonkesy.udptool.ui.log.ASCII
 import com.antonkesy.udptool.ui.log.HEX
 import com.antonkesy.udptool.ui.log.LogMessageCoding
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
+import com.antonkesy.udptool.util.isTimeOutLegal
 
 @Composable
 fun MessageCard(logViewModel: MessageLogViewModel) {
-    val label = "Message"
+    val label = "Send"
     CardListCard(
         label = label,
         dialogText = "",
@@ -116,15 +117,4 @@ fun SwitchLogModeDropDown(isEnabled: Boolean) {
             }
         }
     }
-}
-
-
-fun isTimeOutLegal(value: String): Boolean {
-    try {
-        if (Integer.parseInt(value) in 0..Int.MAX_VALUE) {
-            return true
-        }
-    } catch (e: NumberFormatException) {
-    }
-    return false
 }
