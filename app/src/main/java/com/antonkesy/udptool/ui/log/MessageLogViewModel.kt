@@ -94,4 +94,9 @@ class MessageLogViewModel : ViewModel() {
         _isListeningInterval.value = newValue
     }
 
+    private val _localIP = MutableLiveData<String>()
+    val localIP: LiveData<String> = _localIP
+    fun setLocalIP(newValue: String) {
+        _localIP.value = newValue
+    }
 }

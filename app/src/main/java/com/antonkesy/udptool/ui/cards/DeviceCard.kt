@@ -4,22 +4,23 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import com.antonkesy.udptool.util.setNewLocalPort
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
-
-data class DeviceInfo(val ip: String, val gateway: String, val networkType: String)
+import com.antonkesy.udptool.util.setNewLocalPort
 
 @Composable
-fun DeviceCard(info: DeviceInfo, logViewModel: MessageLogViewModel) {
+fun DeviceCard(logViewModel: MessageLogViewModel) {
     val label = "Device"
     CardListCard(
         label = label,
         dialogText = "",
         content = {
+            val ip by logViewModel.localIP.observeAsState("0.0.0.0")
             DeviceCardContent(
-                ip = info.ip, gateway = info.gateway, networkType = info.networkType, logViewModel
+                ip = ip, logViewModel
             )
         }
     )
@@ -27,13 +28,11 @@ fun DeviceCard(info: DeviceInfo, logViewModel: MessageLogViewModel) {
 
 @Composable
 fun DeviceCardContent(
-    ip: String, gateway: String, networkType: String,
+    ip: String,
     logViewModel: MessageLogViewModel
 ) {
     Column(Modifier.fillMaxWidth()) {
         Text("IP: $ip")
-        Text("Gateway: $gateway")
-        Text("Network type: $networkType")
         NumberOutlinedTextField(
             label = "Local Port",
             isErrorOnOutlineTextFieldValueChange = { setNewLocalPort(it, logViewModel) },

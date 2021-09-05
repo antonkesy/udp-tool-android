@@ -30,7 +30,11 @@ import com.antonkesy.udptool.ui.navigation.Navigation
 import com.antonkesy.udptool.ui.theme.UDPToolTheme
 import com.antonkesy.udptool.util.addSocketHotUpdate
 import kotlinx.coroutines.delay
+import java.net.Inet4Address
 import java.net.InetAddress
+import java.net.NetworkInterface
+import java.net.SocketException
+import java.util.*
 
 
 class MainActivity : ComponentActivity(), ISocketResponses {
@@ -68,6 +72,8 @@ class MainActivity : ComponentActivity(), ISocketResponses {
             lifecycleOwner = this,
             { createSocketThread(logViewModel = messageViewModel) }
         )
+
+        setLocalData(messageViewModel)
 
     }
 
@@ -131,6 +137,34 @@ class MainActivity : ComponentActivity(), ISocketResponses {
             val byteArray = message.toByteArray()
             socket.addMessageToQue(byteArray)
         }
+    }
+
+    private fun setLocalData(viewModel: MessageLogViewModel) {
+        val ip = getLocalIpAddress()
+        if (ip != null) {
+            viewModel.setLocalIP(ip)
+        } else {
+            viewModel.setLocalIP("0.0.0.0")
+        }
+    }
+
+    fun getLocalIpAddress(): String? {
+        try {
+            val en: Enumeration<NetworkInterface> = NetworkInterface.getNetworkInterfaces()
+            while (en.hasMoreElements()) {
+                val intf: NetworkInterface = en.nextElement()
+                val enumIpAddr: Enumeration<InetAddress> = intf.inetAddresses
+                while (enumIpAddr.hasMoreElements()) {
+                    val inetAddress = enumIpAddr.nextElement()
+                    if (!inetAddress.isLoopbackAddress && inetAddress is Inet4Address) {
+                        return inetAddress.hostAddress
+                    }
+                }
+            }
+        } catch (ex: SocketException) {
+            ex.printStackTrace()
+        }
+        return null
     }
 }
 
