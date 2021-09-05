@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.antonkesy.udptool.ui.MessageSendTextFieldRow
@@ -19,11 +17,10 @@ fun LogScreen(
     onSendAttachmentClick: () -> Unit,
     onSendMessageClick: (message: String) -> Unit
 ) {
-    val canSendMessages: Boolean by logViewModel.canSendMessages.observeAsState(true)
     Scaffold(
         modifier = Modifier.padding(paddingValues),
         topBar = {
-            if (canSendMessages) SendMessageBottomBar(
+            if (logViewModel.isMessage.value == true) SendMessageBottomBar(
                 onSendAttachmentClick,
                 onSendMessageClick
             )
