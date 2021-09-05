@@ -3,10 +3,7 @@ package com.antonkesy.udptool.ui.log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.antonkesy.udptool.data.DeviceLogMessage
 import com.antonkesy.udptool.messages.ILogMessage
-import kotlinx.coroutines.launch
 
 class MessageLogViewModel : ViewModel() {
 
@@ -65,17 +62,7 @@ class MessageLogViewModel : ViewModel() {
     fun setIsMessage(newValue: Boolean) {
         _isMessage.value = newValue
     }
-
-    fun generateTestLogMessages() {
-        viewModelScope.launch {
-            val messages = mutableListOf<ILogMessage>()
-            for (i in 1..1000) {
-                messages.add(0, DeviceLogMessage("message $i"))
-            }
-            _logMessages.postValue(messages)
-        }
-    }
-
+    
     private val _isListening = MutableLiveData<Boolean>()
     val isListening: LiveData<Boolean> = _isListening
     fun setIsListening(newValue: Boolean) {
