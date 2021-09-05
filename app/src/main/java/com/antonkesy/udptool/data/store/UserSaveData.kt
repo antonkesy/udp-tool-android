@@ -21,6 +21,9 @@ private val IS_TIMEOUT = booleanPreferencesKey("isTimeout")
 private val IS_MESSAGE = booleanPreferencesKey("isMessage")
 private val BUFFER_SIZE = intPreferencesKey("buffer_size")
 private val MESSAGE_CODING = intPreferencesKey("message_coding")
+private val IS_LISTENING = booleanPreferencesKey("is_listening")
+private val IS_LISTENING_INTERVAL = booleanPreferencesKey("is_listening_interval")
+private val LISTENING_INTERVAL = intPreferencesKey("listening_interval")
 
 internal fun loadSavedData(viewModel: MessageLogViewModel, dataStore: DataStore<Preferences>) {
     runBlocking {
@@ -33,6 +36,9 @@ internal fun loadSavedData(viewModel: MessageLogViewModel, dataStore: DataStore<
             setIsMessage(getIsMessage(dataStore))
             setBufferSize(getBufferSize(dataStore))
             setMessageCoding(getMessageCoding(dataStore))
+            setIsListening(getIsListening(dataStore))
+            setIsListeningInterval(getIsListeningInterval(dataStore))
+            setListenInterval(getListeningInterval(dataStore))
         }
     }
 }
@@ -118,6 +124,36 @@ internal fun observeToSaveData(
         {
             runBlocking {
                 setMessageCoding(it, dataStore)
+            }
+        }
+    )
+
+    observeData(
+        lifecycleOwner = lifecycleOwner,
+        liveData = viewModel.listenInterval,
+        {
+            runBlocking {
+                setListeningInterval(it, dataStore)
+            }
+        }
+    )
+
+    observeData(
+        lifecycleOwner = lifecycleOwner,
+        liveData = viewModel.isListening,
+        {
+            runBlocking {
+                setIsListening(it, dataStore)
+            }
+        }
+    )
+
+    observeData(
+        lifecycleOwner = lifecycleOwner,
+        liveData = viewModel.isListeningInterval,
+        {
+            runBlocking {
+                setIsListeningInterval(it, dataStore)
             }
         }
     )
@@ -235,4 +271,28 @@ private suspend fun getIsMessage(dataStore: DataStore<Preferences>): Boolean {
 
 private suspend fun setIsMessage(newValue: Boolean, dataStore: DataStore<Preferences>) {
     setData(newValue, IS_MESSAGE, dataStore)
+}
+
+private suspend fun getIsListening(dataStore: DataStore<Preferences>): Boolean {
+    return getData(IS_LISTENING, dataStore, false)
+}
+
+private suspend fun setIsListening(newValue: Boolean, dataStore: DataStore<Preferences>) {
+    setData(newValue, IS_LISTENING, dataStore)
+}
+
+private suspend fun getIsListeningInterval(dataStore: DataStore<Preferences>): Boolean {
+    return getData(IS_LISTENING_INTERVAL, dataStore, false)
+}
+
+private suspend fun setIsListeningInterval(newValue: Boolean, dataStore: DataStore<Preferences>) {
+    setData(newValue, IS_LISTENING_INTERVAL, dataStore)
+}
+
+private suspend fun getListeningInterval(dataStore: DataStore<Preferences>): Int {
+    return getData(LISTENING_INTERVAL, dataStore, 0)
+}
+
+private suspend fun setListeningInterval(newValue: Int, dataStore: DataStore<Preferences>) {
+    setData(newValue, LISTENING_INTERVAL, dataStore)
 }
