@@ -14,6 +14,15 @@ class MessageLogViewModel : ViewModel() {
         _logMessages.value = newLogs
     }
 
+    fun addLogMessage(msg: ILogMessage) {
+        var copy = logMessages.value?.toMutableList()
+        if (copy == null) {
+            copy = mutableListOf()
+        }
+        copy.add(0, msg)
+        _logMessages.postValue(copy.toList())
+    }
+
     private val _localPort = MutableLiveData<Int>()
     val localPort: LiveData<Int> = _localPort
     fun setLocalPort(newPort: Int) {
@@ -62,7 +71,7 @@ class MessageLogViewModel : ViewModel() {
     fun setIsMessage(newValue: Boolean) {
         _isMessage.value = newValue
     }
-    
+
     private val _isListening = MutableLiveData<Boolean>()
     val isListening: LiveData<Boolean> = _isListening
     fun setIsListening(newValue: Boolean) {
