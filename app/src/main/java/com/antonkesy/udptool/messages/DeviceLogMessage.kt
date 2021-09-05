@@ -1,6 +1,5 @@
-package com.antonkesy.udptool.data
+package com.antonkesy.udptool.messages
 
-import com.antonkesy.udptool.messages.ILogMessage
 import java.text.SimpleDateFormat
 import java.util.*
 
