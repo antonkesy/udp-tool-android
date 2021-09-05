@@ -17,12 +17,6 @@ class MessageLogViewModel : ViewModel() {
         _logMessages.value = newLogs
     }
 
-    private val _canSendMessages = MutableLiveData<Boolean>()
-    val canSendMessages: LiveData<Boolean> = _canSendMessages
-    fun setCanSendMessages(canSendMessages: Boolean) {
-        _canSendMessages.value = canSendMessages
-    }
-
     private val _localPort = MutableLiveData<Int>()
     val localPort: LiveData<Int> = _localPort
     fun setLocalPort(newPort: Int) {
