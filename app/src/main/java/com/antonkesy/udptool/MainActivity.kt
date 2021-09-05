@@ -21,7 +21,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.compose.rememberNavController
 import com.antonkesy.udptool.data.store.loadSavedData
 import com.antonkesy.udptool.data.store.observeToSaveData
-import com.antonkesy.udptool.udp.IUDPThreadExceptions
+import com.antonkesy.udptool.udp.ISocketResponses
 import com.antonkesy.udptool.udp.UDPSendReceive
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 import com.antonkesy.udptool.ui.navigation.BottomNavigationWithOnlySelectedLabels
@@ -32,7 +32,7 @@ import kotlinx.coroutines.delay
 import java.net.InetAddress
 
 
-class MainActivity : ComponentActivity(), IUDPThreadExceptions {
+class MainActivity : ComponentActivity(), ISocketResponses {
 
     private lateinit var socket: UDPSendReceive
     private lateinit var socketThread: Thread
@@ -101,12 +101,16 @@ class MainActivity : ComponentActivity(), IUDPThreadExceptions {
         Log.e("thread", "socket timeout")
     }
 
-    override fun io() {
+    override fun ioException() {
         Log.e("thread", "io")
     }
 
-    override fun socket() {
+    override fun socketException() {
         Log.e("thread", "socket")
+    }
+
+    override fun dataReceived(data: Array<Byte>) {
+        Log.e("thread", "data received")
     }
 }
 

@@ -2,6 +2,8 @@ package com.antonkesy.udptool.udp;
 
 import android.util.Log;
 
+import com.antonkesy.udptool.util.Utils;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -19,16 +21,16 @@ public class UDPSendReceive implements Runnable {
     private final int timeoutTime;
     private final int bufferSize;
 
-    private final IUDPThreadExceptions threadExceptionsHandler;
+    private final ISocketResponses socketResponseHandler;
 
-    public UDPSendReceive(int localPort, int remotePort, InetAddress remoteAddress, boolean isTimeoutEnabled, int timeoutTime, int bufferSize, IUDPThreadExceptions threadExceptionsHandler) {
+    public UDPSendReceive(int localPort, int remotePort, InetAddress remoteAddress, boolean isTimeoutEnabled, int timeoutTime, int bufferSize, ISocketResponses socketResponseHandler) {
         this.localPort = localPort;
         this.remotePort = remotePort;
         this.remoteAddress = remoteAddress;
         this.isTimeoutEnabled = isTimeoutEnabled;
         this.timeoutTime = timeoutTime;
         this.bufferSize = bufferSize;
-        this.threadExceptionsHandler = threadExceptionsHandler;
+        this.socketResponseHandler = socketResponseHandler;
     }
 
     @Override
@@ -47,24 +49,23 @@ public class UDPSendReceive implements Runnable {
                         udpSocket.setSoTimeout(timeoutTime);
                     }
                     udpSocket.receive(packet);
-                    String text = new String(packet.getData(), 0, packet.getLength());
-                    Log.d("Received text", text);
+                    socketResponseHandler.dataReceived(Utils.byteToByte(packet.getData()));
                 } catch (SocketTimeoutException e) {
                     Log.e("Timeout Exception", "UDP Connection:", e);
-                    threadExceptionsHandler.socketTimeOut();
+                    socketResponseHandler.socketTimeOut();
                 } catch (IOException e) {
                     Log.e("UDP client IOException", "error: ", e);
                     isRunning = false;
                     udpSocket.close();
-                    threadExceptionsHandler.io();
+                    socketResponseHandler.ioException();
                 }
             }
         } catch (SocketException e) {
             Log.e("Socket Open:", "Error:", e);
-            threadExceptionsHandler.socket();
+            socketResponseHandler.socketException();
         } catch (IOException e) {
             e.printStackTrace();
-            threadExceptionsHandler.io();
+            socketResponseHandler.ioException();
         }
     }
 
