@@ -34,8 +34,8 @@ fun ReceiveCard(logViewModel: MessageLogViewModel) {
 fun ReceiveCardContent(
     logViewModel: MessageLogViewModel
 ) {
-    val isListening by logViewModel.isListening.observeAsState(true)
-    val isListenInterval by logViewModel.isListeningInterval.observeAsState(true)
+    val isListening by logViewModel.isListening.observeAsState(false)
+    val isListenInterval by logViewModel.isListeningInterval.observeAsState(false)
     Column(
         Modifier
             .fillMaxWidth()

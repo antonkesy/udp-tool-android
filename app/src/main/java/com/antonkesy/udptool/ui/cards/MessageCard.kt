@@ -47,8 +47,8 @@ fun MessagesCardContent(
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        val isMsg by logViewModel.isMessage.observeAsState(true)
-        val isTimeOut by logViewModel.isTimeOutTime.observeAsState(true)
+        val isMsg by logViewModel.isMessage.observeAsState(false)
+        val isTimeOut by logViewModel.isTimeOutTime.observeAsState(false)
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
