@@ -13,6 +13,7 @@ import com.antonkesy.udptool.R
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.dialogs.ClearLogDialogBox
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
+import com.antonkesy.udptool.util.isStringLegalBufferSize
 
 @Composable
 fun LogInfoCard(logViewModel: MessageLogViewModel) {
@@ -55,16 +56,6 @@ fun SetBufferSize(viewModel: MessageLogViewModel) {
                 return@NumberOutlinedTextField true
             }
         })
-}
-
-fun isStringLegalBufferSize(input: String): Boolean {
-    try {
-        if (Integer.parseInt(input) in 1..Int.MAX_VALUE) {
-            return true
-        }
-    } catch (e: NumberFormatException) {
-    }
-    return false;
 }
 
 @Composable
