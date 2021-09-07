@@ -11,10 +11,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.antonkesy.udptool.messages.ILogMessage
+import com.antonkesy.udptool.ui.dialogs.DetailDialog
 
 
 @Composable
@@ -31,9 +34,13 @@ fun MessagesLogList(logViewModel: MessageLogViewModel) {
 
 @Composable
 fun MessageLogItem(message: ILogMessage) {
+    val showDetailDialog = remember { mutableStateOf(false) }
+    DetailDialog(logMessage = message,showDetailDialog)
     Row(
         Modifier
-            .clickable { /*TODO(open detail view)*/ }
+            .clickable {
+                showDetailDialog.value = true
+            }
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
