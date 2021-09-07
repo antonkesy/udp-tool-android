@@ -95,4 +95,10 @@ class MessageLogViewModel : ViewModel() {
     fun setLocalIP(newValue: String) {
         _localIP.value = newValue
     }
+
+    private val _enableSocketCreation = MutableLiveData<Boolean>()
+    val enableSocketCreation: LiveData<Boolean> = _enableSocketCreation
+    fun setSocketCreation(newValue: Boolean) {
+        _enableSocketCreation.value = newValue
+    }
 }

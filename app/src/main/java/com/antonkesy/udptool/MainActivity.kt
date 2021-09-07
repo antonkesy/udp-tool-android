@@ -64,7 +64,6 @@ class MainActivity : ComponentActivity(), ISocketResponses {
             lifecycleOwner = this
         )
 
-        createSocketThread(logViewModel = messageViewModel)
         addSocketHotUpdate(
             logViewModel = messageViewModel,
             lifecycleOwner = this,
@@ -73,6 +72,7 @@ class MainActivity : ComponentActivity(), ISocketResponses {
 
         setLocalData(messageViewModel)
 
+        createStartSocket(messageViewModel)
     }
 
     private val startForResult =
@@ -83,6 +83,13 @@ class MainActivity : ComponentActivity(), ISocketResponses {
             }
         }
 
+    private fun createStartSocket(logViewModel: MessageLogViewModel) {
+        //create socket when splash screen is over
+        logViewModel.setLogMessages(emptyList())
+        logViewModel.enableSocketCreation.observe(this,
+            { createSocketThread(logViewModel) })
+    }
+
     private fun sendAttachment() {
         startForResult.launch(Intent(Intent.ACTION_GET_CONTENT).setType("*/*"))
     }
@@ -90,6 +97,9 @@ class MainActivity : ComponentActivity(), ISocketResponses {
     private fun createSocketThread(logViewModel: MessageLogViewModel) {
         if (::socketThread.isInitialized) {
             socket.kill()
+        }
+        if (logViewModel.enableSocketCreation.value == false) {
+            return
         }
         try {
             socket = UDPSendReceive(
@@ -175,6 +185,7 @@ fun MainView(
             isSplashScreenShowing = false
             navController.popBackStack()
             navController.navigate(NavCategories.Configure.route)
+            logViewModel.setSocketCreation(true)
         }
 
         val bottomNavigationItems = listOf(
