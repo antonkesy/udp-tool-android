@@ -2,7 +2,7 @@ package com.antonkesy.udptool.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val BlueDark = Color(0xFF303AF2)
+val BlueMiddle = Color(0xFF5058F2)
+val BlueLight = Color(0xFF6B71F2)
+val BlueLighter = Color(0xFFA0A4F2)
