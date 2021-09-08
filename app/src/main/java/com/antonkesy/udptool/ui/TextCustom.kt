@@ -72,7 +72,7 @@ fun MessageSendTextFieldRow(
             )
         )
         IconButton(
-            onClick = { sendText = ""; onSendMessageClick(sendText) },
+            onClick = { onSendMessageClick(sendText); sendText = "" },
             Modifier.wrapContentWidth()
         ) {
             Icon(imageVector = Icons.Filled.Send, contentDescription = "send")
