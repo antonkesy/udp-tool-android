@@ -7,5 +7,5 @@ fun isStringLegalBufferSize(input: String): Boolean {
         }
     } catch (e: NumberFormatException) {
     }
-    return false;
+    return false
 }

@@ -94,7 +94,7 @@ public class UDPSendReceive implements Runnable {
         }
     }
 
-    private void listenForMessages() throws SocketTimeoutException, IOException {
+    private void listenForMessages() throws IOException {
         if (isListening) {
             if (isListeningInterval) {
                 udpSocket.setSoTimeout(listenInterval);
