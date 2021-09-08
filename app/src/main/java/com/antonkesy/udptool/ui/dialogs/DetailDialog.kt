@@ -10,7 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import com.antonkesy.udptool.messages.DeviceLogMessage
 import com.antonkesy.udptool.messages.ILogMessage
+import com.antonkesy.udptool.messages.MessageLog
+import com.antonkesy.udptool.messages.SocketLogMessage
 
 @Composable
 fun DetailDialog(logMessage: ILogMessage, showDetailDialog: MutableState<Boolean>) {
@@ -45,5 +48,36 @@ fun DetailDialogContent(logMessage: ILogMessage) {
             Text(text = "Time: ")
             Text(text = logMessage.time)
         }
+        DetailContent(logMessage = logMessage)
+    }
+}
+
+@Composable
+fun DetailContent(logMessage: ILogMessage) {
+    when (logMessage) {
+        is DeviceLogMessage -> DetailContentDeviceLog(logMessage = logMessage)
+        is SocketLogMessage -> DetailContentSocketLog(logMessage = logMessage)
+        is MessageLog -> DetailContentMessageLog(logMessage = logMessage)
+    }
+}
+
+@Composable
+fun DetailContentDeviceLog(logMessage: ILogMessage) {
+    Column(Modifier.fillMaxWidth()) {
+        Text(logMessage.info)
+    }
+}
+
+@Composable
+fun DetailContentMessageLog(logMessage: ILogMessage) {
+    Column(Modifier.fillMaxWidth()) {
+        Text((logMessage as MessageLog).data.toString())
+    }
+}
+
+@Composable
+fun DetailContentSocketLog(logMessage: ILogMessage) {
+    Column(Modifier.fillMaxWidth()) {
+        Text(logMessage.info)
     }
 }

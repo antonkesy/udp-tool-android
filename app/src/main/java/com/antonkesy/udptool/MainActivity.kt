@@ -21,6 +21,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.compose.rememberNavController
 import com.antonkesy.udptool.data.store.loadSavedData
 import com.antonkesy.udptool.data.store.observeToSaveData
+import com.antonkesy.udptool.messages.MessageLog
 import com.antonkesy.udptool.messages.SocketLogMessage
 import com.antonkesy.udptool.udp.ISocketResponses
 import com.antonkesy.udptool.udp.UDPSendReceive
@@ -137,7 +138,7 @@ class MainActivity : ComponentActivity(), ISocketResponses {
     }
 
     override fun dataReceived(data: ByteArray) {
-        viewModel.addLogMessage(SocketLogMessage.RECEIVED)
+        viewModel.addLogMessage(MessageLog(isSend = false, data = data))
     }
 
     override fun socketStart() {
@@ -155,8 +156,9 @@ class MainActivity : ComponentActivity(), ISocketResponses {
     private fun sendMessage(message: String) {
         if (::socket.isInitialized) {
             Log.e("send", "try to send $message")
-            val byteArray = message.toByteArray()
-            socket.addMessageToQue(byteArray)
+            val messageByteArray = message.toByteArray()
+            socket.addMessageToQue(messageByteArray)
+            viewModel.addLogMessage(MessageLog(isSend = true, data = message.toByteArray()))
         }
     }
 

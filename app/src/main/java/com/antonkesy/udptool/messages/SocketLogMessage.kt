@@ -8,9 +8,9 @@ sealed class SocketLogMessage(
     override val time: String
 ) :
     ILogMessage {
-    constructor(title: String, message: String) : this(
-        title = title,
-        info = message,
+            constructor(title: String, message: String) : this(
+            title = title,
+            info = message,
         time = getCurrentTimeAsStringDate()
     )
 
