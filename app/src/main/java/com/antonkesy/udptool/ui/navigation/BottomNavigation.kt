@@ -70,8 +70,8 @@ fun Navigation(
             LogScreen(
                 paddingValues = innerPadding,
                 logViewModel = logViewModel,
-                onSendAttachmentClick,
-                onSendMessageClick
+                onSendAttachmentClick = onSendAttachmentClick,
+                onSendMessageClick = onSendMessageClick
             )
         }
 

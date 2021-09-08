@@ -21,8 +21,8 @@ fun LogScreen(
         modifier = Modifier.padding(paddingValues),
         topBar = {
             if (logViewModel.isMessage.value == true) SendMessageBottomBar(
-                onSendAttachmentClick,
-                onSendMessageClick
+                onSendAttachmentClick = onSendAttachmentClick,
+                onSendMessageClick = onSendMessageClick
             )
         }) { innerPadding ->
         Column(Modifier.padding(innerPadding)) {
@@ -41,6 +41,9 @@ fun SendMessageBottomBar(
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        MessageSendTextFieldRow(onSendAttachmentClick, onSendMessageClick)
+        MessageSendTextFieldRow(
+            onSendAttachmentClick = onSendAttachmentClick,
+            onSendMessageClick = onSendMessageClick
+        )
     }
 }
