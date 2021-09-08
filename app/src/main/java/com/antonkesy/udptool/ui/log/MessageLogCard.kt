@@ -24,7 +24,7 @@ import com.antonkesy.udptool.ui.dialogs.DetailDialog
 fun MessagesLogList(logViewModel: MessageLogViewModel) {
     val messages: List<ILogMessage> by logViewModel.logMessages.observeAsState(emptyList())
 
-    LazyColumn {
+    LazyColumn(Modifier.padding(5.dp)) {
         items(items = messages) {
             MessageLogItem(message = it, viewModel = logViewModel)
         }
