@@ -1,4 +1,4 @@
-package com.antonkesy.udptool.messages
+package com.antonkesy.udptool.data.attachment
 
 import android.app.Activity
 import android.content.Context
