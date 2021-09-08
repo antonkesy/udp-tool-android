@@ -46,7 +46,6 @@ fun NumberOutlinedTextField(
 
 @Composable
 fun MessageSendTextFieldRow(
-    onSendAttachmentClick: () -> Unit,
     onSendMessageClick: (message: String) -> Unit
 ) {
     var sendText by remember { mutableStateOf("") }
@@ -54,18 +53,6 @@ fun MessageSendTextFieldRow(
         TextField(
             value = sendText, onValueChange = { sendText = it },
             Modifier.weight(1f), shape = RoundedCornerShape(8.dp),
-            trailingIcon = {
-                //todo
-                /*
-                if (sendText.isEmpty()) {
-                    IconButton(onClick = { onSendAttachmentClick() }) {
-                        Icon(
-                            imageVector = Icons.Outlined.AttachFile,
-                            contentDescription = null
-                        )
-                    }
-                }*/
-            },
             colors = TextFieldDefaults.textFieldColors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent

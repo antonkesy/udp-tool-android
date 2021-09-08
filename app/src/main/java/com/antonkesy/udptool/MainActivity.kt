@@ -54,7 +54,6 @@ class MainActivity : ComponentActivity(), ISocketResponses {
         setContent {
             MainView(
                 messageViewModel,
-                onSendAttachmentClick = { sendAttachment() },
                 onSendMessageClick = { sendMessage(it) })
         }
 
@@ -77,23 +76,11 @@ class MainActivity : ComponentActivity(), ISocketResponses {
         createStartSocket(messageViewModel)
     }
 
-    private val startForResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val intent = result.data
-                //TODO
-            }
-        }
-
     private fun createStartSocket(logViewModel: MessageLogViewModel) {
         //create socket when splash screen is over
         logViewModel.setLogMessages(emptyList())
         logViewModel.enableSocketCreation.observe(this,
             { createSocketThread(logViewModel) })
-    }
-
-    private fun sendAttachment() {
-        startForResult.launch(Intent(Intent.ACTION_GET_CONTENT).setType("*/*"))
     }
 
     private fun createSocketThread(logViewModel: MessageLogViewModel) {
@@ -175,7 +162,7 @@ class MainActivity : ComponentActivity(), ISocketResponses {
 @ExperimentalAnimationApi
 @Composable
 fun MainView(
-    logViewModel: MessageLogViewModel, onSendAttachmentClick: () -> Unit,
+    logViewModel: MessageLogViewModel,
     onSendMessageClick: (message: String) -> Unit
 ) {
     var isSplashScreenShowing by remember { mutableStateOf(true) }
@@ -210,7 +197,6 @@ fun MainView(
                 navController = navController,
                 innerPadding = innerPadding,
                 logViewModel = logViewModel,
-                onSendAttachmentClick = onSendAttachmentClick,
                 onSendMessageClick = onSendMessageClick
             )
         }

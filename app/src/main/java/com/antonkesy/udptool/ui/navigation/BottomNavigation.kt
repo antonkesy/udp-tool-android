@@ -56,7 +56,6 @@ fun Navigation(
     navController: NavHostController,
     innerPadding: PaddingValues,
     logViewModel: MessageLogViewModel,
-    onSendAttachmentClick: () -> Unit,
     onSendMessageClick: (message: String) -> Unit
 ) {
     NavHost(navController, startDestination = NavCategories.Splash.route) {
@@ -70,7 +69,6 @@ fun Navigation(
             LogScreen(
                 paddingValues = innerPadding,
                 logViewModel = logViewModel,
-                onSendAttachmentClick = onSendAttachmentClick,
                 onSendMessageClick = onSendMessageClick
             )
         }

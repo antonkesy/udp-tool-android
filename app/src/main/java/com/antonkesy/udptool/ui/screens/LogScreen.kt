@@ -14,14 +14,12 @@ import com.antonkesy.udptool.ui.log.MessagesLogList
 fun LogScreen(
     paddingValues: PaddingValues,
     logViewModel: MessageLogViewModel,
-    onSendAttachmentClick: () -> Unit,
     onSendMessageClick: (message: String) -> Unit
 ) {
     Scaffold(
         modifier = Modifier.padding(paddingValues),
         topBar = {
             if (logViewModel.isMessage.value == true) SendMessageBottomBar(
-                onSendAttachmentClick = onSendAttachmentClick,
                 onSendMessageClick = onSendMessageClick
             )
         }) { innerPadding ->
@@ -33,7 +31,6 @@ fun LogScreen(
 
 @Composable
 fun SendMessageBottomBar(
-    onSendAttachmentClick: () -> Unit,
     onSendMessageClick: (message: String) -> Unit
 ) {
     Card(
@@ -42,7 +39,6 @@ fun SendMessageBottomBar(
             .wrapContentHeight()
     ) {
         MessageSendTextFieldRow(
-            onSendAttachmentClick = onSendAttachmentClick,
             onSendMessageClick = onSendMessageClick
         )
     }
