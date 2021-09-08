@@ -1,7 +1,6 @@
 package com.antonkesy.udptool.messages
 
-import java.text.SimpleDateFormat
-import java.util.*
+import com.antonkesy.udptool.util.getCurrentTimeAsStringDate
 
 sealed class SocketLogMessage(
     override val title: String,
@@ -12,7 +11,7 @@ sealed class SocketLogMessage(
     constructor(title: String, message: String) : this(
         title = title,
         info = message,
-        time = SimpleDateFormat("HH:mm:ss.SSS").format(Date().time)
+        time = getCurrentTimeAsStringDate()
     )
 
     object CLOSED : SocketLogMessage("socket closed", "")

@@ -1,7 +1,6 @@
 package com.antonkesy.udptool.messages
 
-import java.text.SimpleDateFormat
-import java.util.*
+import com.antonkesy.udptool.util.getCurrentTimeAsStringDate
 
 data class DeviceLogMessage(
     override val title: String,
@@ -12,7 +11,7 @@ data class DeviceLogMessage(
     constructor(title: String, info: String, data: ByteArray) : this(
         title = title,
         info = info,
-        time = SimpleDateFormat("HH:mm:ss.SSS").format(Date().time), data = data
+        time = getCurrentTimeAsStringDate(), data = data
     )
 
     constructor(title: String, info: String) : this(title = title, info = info, data = ByteArray(0))
