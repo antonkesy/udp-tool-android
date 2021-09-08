@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -79,20 +80,22 @@ fun DetailContentDeviceLog(logMessage: DeviceLogMessage) {
 
 @Composable
 fun DetailContentMessageLog(logMessage: MessageLog, viewModel: MessageLogViewModel) {
-    Column(Modifier.fillMaxWidth()) {
-        Text(text = "Message:")
-        val data = logMessage.data
-        Text(
-            when (viewModel.messageCoding.value) {
-                ASCII -> {
-                    getDataAsASCIIString(data)
+    LazyColumn(Modifier.fillMaxWidth()) {
+        item {
+            Text(text = "Message:")
+            val data = logMessage.data
+            Text(
+                when (viewModel.messageCoding.value) {
+                    ASCII -> {
+                        getDataAsASCIIString(data)
+                    }
+                    HEX -> {
+                        getDataAsHexString(data)
+                    }
+                    else -> ""
                 }
-                HEX -> {
-                    getDataAsHexString(data)
-                }
-                else -> ""
-            }
-        )
+            )
+        }
     }
 }
 
