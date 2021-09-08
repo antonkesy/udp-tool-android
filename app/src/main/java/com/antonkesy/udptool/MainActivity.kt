@@ -21,6 +21,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.compose.rememberNavController
 import com.antonkesy.udptool.data.store.loadSavedData
 import com.antonkesy.udptool.data.store.observeToSaveData
+import com.antonkesy.udptool.messages.DeviceLogMessage
 import com.antonkesy.udptool.messages.MessageLog
 import com.antonkesy.udptool.messages.SocketLogMessage
 import com.antonkesy.udptool.udp.ISocketResponses
@@ -54,7 +55,7 @@ class MainActivity : ComponentActivity(), ISocketResponses {
             MainView(
                 messageViewModel,
                 onSendAttachmentClick = { sendAttachment() },
-                { sendMessage(it) })
+                onSendMessageClick = { sendMessage(it) })
         }
 
         loadSavedData(viewModel = messageViewModel, dataStore = dataStore)
@@ -150,15 +151,14 @@ class MainActivity : ComponentActivity(), ISocketResponses {
     }
 
     override fun sendPacket(data: ByteArray) {
-        viewModel.addLogMessage(SocketLogMessage.SEND)
+        viewModel.addLogMessage(MessageLog(isSend = true, data = data))
     }
 
     private fun sendMessage(message: String) {
         if (::socket.isInitialized) {
-            Log.e("send", "try to send $message")
             val messageByteArray = message.toByteArray()
             socket.addMessageToQue(messageByteArray)
-            viewModel.addLogMessage(MessageLog(isSend = true, data = message.toByteArray()))
+            viewModel.addLogMessage(DeviceLogMessage("add to send queue:", message))
         }
     }
 
