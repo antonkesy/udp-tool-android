@@ -26,16 +26,16 @@ fun MessagesLogList(logViewModel: MessageLogViewModel) {
 
     LazyColumn {
         items(items = messages) {
-            MessageLogItem(it)
+            MessageLogItem(message = it, viewModel = logViewModel)
         }
     }
 }
 
 
 @Composable
-fun MessageLogItem(message: ILogMessage) {
+fun MessageLogItem(message: ILogMessage, viewModel: MessageLogViewModel) {
     val showDetailDialog = remember { mutableStateOf(false) }
-    DetailDialog(logMessage = message,showDetailDialog)
+    DetailDialog(logMessage = message, showDetailDialog, viewModel = viewModel)
     Row(
         Modifier
             .clickable {

@@ -13,7 +13,6 @@ import androidx.compose.ui.res.stringResource
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.ASCII
 import com.antonkesy.udptool.ui.log.HEX
-import com.antonkesy.udptool.ui.log.LogMessageCoding
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 import com.antonkesy.udptool.util.isTimeOutLegal
 
@@ -77,16 +76,15 @@ fun MessagesCardContent(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(text = "Message coding")
-            SwitchLogModeDropDown(isMsg)
+            SwitchLogModeDropDown(isMsg, viewModel = logViewModel)
         }
     }
 }
 
 @Composable
-fun SwitchLogModeDropDown(isEnabled: Boolean) {
+fun SwitchLogModeDropDown(isEnabled: Boolean, viewModel: MessageLogViewModel) {
     var expanded by remember { mutableStateOf(false) }
-    //todo load from model
-    var currentItem by remember { mutableStateOf<LogMessageCoding>(ASCII) }
+    val currentItem by viewModel.messageCoding.observeAsState(ASCII)
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -100,13 +98,13 @@ fun SwitchLogModeDropDown(isEnabled: Boolean) {
             onDismissRequest = { expanded = false }
         ) {
             DropdownMenuItem(onClick = {
-                currentItem = ASCII
+                viewModel.setMessageCoding(ASCII)
                 expanded = false
             }) {
                 Text(stringResource(id = ASCII.nameId))
             }
             DropdownMenuItem(onClick = {
-                currentItem = HEX
+                viewModel.setMessageCoding(HEX)
                 expanded = false
             }) {
                 Text(stringResource(id = HEX.nameId))
