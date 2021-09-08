@@ -16,8 +16,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.antonkesy.udptool.messages.DeviceLogMessage
 import com.antonkesy.udptool.messages.ILogMessage
+import com.antonkesy.udptool.messages.MessageLog
+import com.antonkesy.udptool.messages.SocketLogMessage
 import com.antonkesy.udptool.ui.dialogs.DetailDialog
+import com.antonkesy.udptool.util.getDataAsASCIIString
 
 
 @Composable
@@ -44,7 +48,6 @@ fun MessageLogItem(message: ILogMessage, viewModel: MessageLogViewModel) {
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-
         Text(
             text = "[${message.time}]:",
             textAlign = TextAlign.Start,
@@ -58,5 +61,47 @@ fun MessageLogItem(message: ILogMessage, viewModel: MessageLogViewModel) {
                 .fillMaxWidth()
                 .padding(start = 10.dp)
         )
+        when (message) {
+            is DeviceLogMessage -> DeviceLogMessageContent(message = message, viewModel = viewModel)
+            is SocketLogMessage -> SocketLogMessageContent(message = message, viewModel = viewModel)
+            is MessageLog -> MessageLogMessageContent(message = message, viewModel = viewModel)
+        }
     }
+}
+
+@Composable
+fun SocketLogMessageContent(message: SocketLogMessage, viewModel: MessageLogViewModel) {
+    Text(
+        text = message.info,
+        textAlign = TextAlign.Start,
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp)
+    )
+}
+
+@Composable
+fun MessageLogMessageContent(message: MessageLog, viewModel: MessageLogViewModel) {
+    Text(
+        text = getDataAsASCIIString(message.data),
+        textAlign = TextAlign.Start,
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp)
+    )
+}
+
+
+@Composable
+fun DeviceLogMessageContent(message: DeviceLogMessage, viewModel: MessageLogViewModel) {
+    Text(
+        text = message.info,
+        textAlign = TextAlign.Start,
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 10.dp)
+    )
 }
