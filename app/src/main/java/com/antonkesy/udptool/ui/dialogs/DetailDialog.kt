@@ -20,7 +20,7 @@ fun DetailDialog(logMessage: ILogMessage, showDetailDialog: MutableState<Boolean
                 showDetailDialog.value = false
             },
             title = {
-                Text(logMessage.info)
+                Text(logMessage.title)
             },
             confirmButton = {
                 Button(
