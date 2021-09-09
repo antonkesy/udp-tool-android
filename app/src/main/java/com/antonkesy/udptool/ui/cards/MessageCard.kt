@@ -71,18 +71,12 @@ fun MessagesCardContent(
                 enabled = isMsg,
                 onCheckedChange = { logViewModel.setIsTimeOutTime(it) })
         }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(text = "Message coding")
-            SwitchLogModeDropDown(isMsg, viewModel = logViewModel)
-        }
+
     }
 }
 
 @Composable
-fun SwitchLogModeDropDown(isEnabled: Boolean, viewModel: MessageLogViewModel) {
+fun SwitchLogModeDropDown(isEnabled: Boolean = true, viewModel: MessageLogViewModel) {
     var expanded by remember { mutableStateOf(false) }
     val currentItem by viewModel.messageCoding.observeAsState(ASCII)
     Box(

@@ -36,9 +36,17 @@ fun LogInfoCardContent(
 ) {
     Column(Modifier.fillMaxWidth()) {
         SetBufferSize(viewModel)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = "Message decoding")
+            SwitchLogModeDropDown(viewModel = viewModel)
+        }
         Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.padding(top = 12.dp)) {
             ClearLogButton(viewModel = viewModel)
         }
+
     }
 }
 
