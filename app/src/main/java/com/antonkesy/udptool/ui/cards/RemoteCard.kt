@@ -3,7 +3,9 @@ package com.antonkesy.udptool.ui.cards
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.antonkesy.udptool.R
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 import com.antonkesy.udptool.util.setNewRemoteIP
@@ -14,7 +16,7 @@ fun RemoteCard(viewModel: MessageLogViewModel) {
     val label = "Remote"
     CardListCard(
         label = label,
-        dialogText = "",
+        dialogText = stringResource(id = R.string.remote_card_help),
         cardHeader = { CardHeader(label = label) },
         content = {
             RemoteContent(

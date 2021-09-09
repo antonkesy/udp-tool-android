@@ -6,6 +6,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.antonkesy.udptool.R
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 import com.antonkesy.udptool.util.isTimeOutLegal
@@ -15,7 +17,7 @@ fun ReceiveCard(logViewModel: MessageLogViewModel) {
     val label = "Listen"
     CardListCard(
         label = label,
-        dialogText = "",
+        dialogText = stringResource(id = R.string.receive_card_help),
         cardHeader = {
             val isListening by logViewModel.isListening.observeAsState(true)
             CardHeaderSwitch(label = label, isChecked = isListening, onCheckedChange = {

@@ -5,18 +5,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.antonkesy.udptool.ui.FakeOutlinedTextField
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 import com.antonkesy.udptool.util.setNewLocalPort
+import com.antonkesy.udptool.R
 
 @Composable
 fun DeviceCard(logViewModel: MessageLogViewModel) {
     val label = "Device"
     CardListCard(
         label = label,
-        dialogText = "",
+        dialogText = stringResource(id = R.string.device_card_help),
         cardHeader = { CardHeader(label = label) },
         content = {
             DeviceCardContent(logViewModel)

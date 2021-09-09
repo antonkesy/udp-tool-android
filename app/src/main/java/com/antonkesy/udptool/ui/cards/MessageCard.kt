@@ -10,6 +10,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.antonkesy.udptool.R
 import com.antonkesy.udptool.ui.NumberOutlinedTextField
 import com.antonkesy.udptool.ui.log.ASCII
 import com.antonkesy.udptool.ui.log.HEX
@@ -21,7 +22,7 @@ fun MessageCard(logViewModel: MessageLogViewModel) {
     val label = "Send"
     CardListCard(
         label = label,
-        dialogText = "",
+        dialogText = stringResource(id = R.string.message_card_help),
         cardHeader = {
             val isMsg by logViewModel.isMessage.observeAsState(true)
             CardHeaderSwitch(label = label, isChecked = isMsg, onCheckedChange = {

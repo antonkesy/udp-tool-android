@@ -5,4 +5,12 @@
     <string name="splash_screen">Splash Screen</string>
     <string name="ascii_mode">ASCII</string>
     <string name="hex_mode">HEX</string>
+
+    <!-- Help dialog texts -->
+    <string name="device_card_help">IP = current network ip of this device\nlocal port = set port where to receive and send messages from (can\'t be under 1200)</string>
+    <string name="remote_card_help">Remote IP = local, same network ip address of receiver\nport = port of receiver</string>
+    <string name="message_card_help">enable,disable\nlisten for response after sending message</string>
+    <string name="receive_card_help">enable,disable\nlisten for messages</string>
+    <string name="log_card_help">show messages decoded in hex or ascii values</string>
+    <!-- end -->
 </resources>
