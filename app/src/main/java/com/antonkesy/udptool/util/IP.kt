@@ -1,17 +1,15 @@
 package com.antonkesy.udptool.util
 
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
-import java.net.Inet4Address
-import java.net.InetAddress
-import java.net.NetworkInterface
-import java.net.SocketException
+import java.net.*
 import java.util.*
 
 fun isLegalIP(value: String): Boolean {
     try {
         val hostAddress = Inet4Address.getByName(value).hostAddress ?: return false
         return hostAddress == value
-    } catch (e: Exception) {
+    } catch (ignore: RuntimeException) {
+    } catch (ignore: UnknownHostException) {
     }
     return false
 }
