@@ -122,12 +122,17 @@ class MainActivity : ComponentActivity(), ISocketResponses {
         )
     }
 
-    override fun ioException() {
-        viewModel.addLogMessage(SocketLogMessage(SocketLogMessageType.IOEXCEPTION, ""))
+    override fun ioException(stackTraceMessage: String) {
+        viewModel.addLogMessage(
+            SocketLogMessage(
+                SocketLogMessageType.IOEXCEPTION,
+                stackTraceMessage
+            )
+        )
     }
 
-    override fun socketException() {
-        viewModel.addLogMessage(SocketLogMessage(SocketLogMessageType.EXCEPTION, ""))
+    override fun socketException(stackTraceMessage: String) {
+        viewModel.addLogMessage(SocketLogMessage(SocketLogMessageType.EXCEPTION, stackTraceMessage))
     }
 
     override fun dataReceived(data: ByteArray) {

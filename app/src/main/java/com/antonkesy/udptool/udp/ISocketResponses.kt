@@ -6,8 +6,8 @@ enum class TimeOutReason {
 
 interface ISocketResponses {
     fun socketTimeOut(reason: TimeOutReason)
-    fun ioException()
-    fun socketException()
+    fun ioException(stackTraceMessage: String)
+    fun socketException(stackTraceMessage: String)
     fun dataReceived(data: ByteArray)
     fun socketStart()
     fun socketClosed()

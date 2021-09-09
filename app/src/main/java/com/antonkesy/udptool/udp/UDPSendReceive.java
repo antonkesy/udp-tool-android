@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 
 public class UDPSendReceive implements Runnable {
@@ -66,12 +67,12 @@ public class UDPSendReceive implements Runnable {
                 } catch (IOException e) {
                     isRunning = false;
                     udpSocket.close();
-                    socketResponseHandler.ioException();
+                    socketResponseHandler.ioException(Objects.requireNonNull(e.getMessage()));
                     socketResponseHandler.socketClosed();
                 }
             }
         } catch (SocketException e) {
-            socketResponseHandler.socketException();
+            socketResponseHandler.socketException(Objects.requireNonNull(e.getMessage()));
         }
     }
 
@@ -90,7 +91,7 @@ public class UDPSendReceive implements Runnable {
         } catch (SocketTimeoutException e) {
             socketResponseHandler.socketTimeOut(TimeOutReason.SEND_RESPONSE_TIMEOUT);
         } catch (IOException e) {
-            socketResponseHandler.ioException();
+            socketResponseHandler.ioException(Objects.requireNonNull(e.getMessage()));
         }
     }
 
