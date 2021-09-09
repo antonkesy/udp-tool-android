@@ -155,7 +155,7 @@ class MainActivity : ComponentActivity(), ISocketResponses {
         if (::socket.isInitialized) {
             val messageByteArray = message.toByteArray()
             socket.addMessageToQue(messageByteArray)
-            viewModel.addLogMessage(DeviceLogMessage("add to send queue:", message))
+            viewModel.addLogMessage(DeviceLogMessage("add to send queue", message))
         }
     }
 
