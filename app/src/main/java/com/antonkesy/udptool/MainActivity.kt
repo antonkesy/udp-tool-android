@@ -1,14 +1,10 @@
 package com.antonkesy.udptool
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -24,7 +20,9 @@ import com.antonkesy.udptool.data.store.observeToSaveData
 import com.antonkesy.udptool.messages.DeviceLogMessage
 import com.antonkesy.udptool.messages.MessageLog
 import com.antonkesy.udptool.messages.SocketLogMessage
+import com.antonkesy.udptool.messages.SocketLogMessageType
 import com.antonkesy.udptool.udp.ISocketResponses
+import com.antonkesy.udptool.udp.TimeOutReason
 import com.antonkesy.udptool.udp.UDPSendReceive
 import com.antonkesy.udptool.ui.log.MessageLogViewModel
 import com.antonkesy.udptool.ui.navigation.BottomNavigationWithOnlySelectedLabels
@@ -113,16 +111,23 @@ class MainActivity : ComponentActivity(), ISocketResponses {
         }
     }
 
-    override fun socketTimeOut() {
-        viewModel.addLogMessage(SocketLogMessage.TIMEOUT)
+    override fun socketTimeOut(reason: TimeOutReason) {
+        viewModel.addLogMessage(
+            SocketLogMessage(
+                SocketLogMessageType.TIMEOUT, when (reason) {
+                    TimeOutReason.RECEIVE_TIMEOUT -> "receive timeout " + viewModel.listenInterval.value.toString() + "ms"
+                    TimeOutReason.SEND_RESPONSE_TIMEOUT -> "send response timeout " + viewModel.timeOutTime.value.toString() + "ms"
+                }
+            )
+        )
     }
 
     override fun ioException() {
-        viewModel.addLogMessage(SocketLogMessage.IOEXCEPTION)
+        viewModel.addLogMessage(SocketLogMessage(SocketLogMessageType.IOEXCEPTION, ""))
     }
 
     override fun socketException() {
-        viewModel.addLogMessage(SocketLogMessage.EXCEPTION)
+        viewModel.addLogMessage(SocketLogMessage(SocketLogMessageType.EXCEPTION, ""))
     }
 
     override fun dataReceived(data: ByteArray) {
@@ -130,11 +135,11 @@ class MainActivity : ComponentActivity(), ISocketResponses {
     }
 
     override fun socketStart() {
-        viewModel.addLogMessage(SocketLogMessage.START)
+        viewModel.addLogMessage(SocketLogMessage(SocketLogMessageType.START, ""))
     }
 
     override fun socketClosed() {
-        viewModel.addLogMessage(SocketLogMessage.CLOSED)
+        viewModel.addLogMessage(SocketLogMessage(SocketLogMessageType.CLOSED, ""))
     }
 
     override fun sendPacket(data: ByteArray) {

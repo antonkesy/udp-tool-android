@@ -62,7 +62,7 @@ public class UDPSendReceive implements Runnable {
                 try {
                     listenForMessages();
                 } catch (SocketTimeoutException e) {
-                    socketResponseHandler.socketTimeOut();
+                    socketResponseHandler.socketTimeOut(TimeOutReason.RECEIVE_TIMEOUT);
                 } catch (IOException e) {
                     isRunning = false;
                     udpSocket.close();
@@ -88,7 +88,7 @@ public class UDPSendReceive implements Runnable {
                 socketResponseHandler.dataReceived(packet.getData());
             }
         } catch (SocketTimeoutException e) {
-            socketResponseHandler.socketTimeOut();
+            socketResponseHandler.socketTimeOut(TimeOutReason.SEND_RESPONSE_TIMEOUT);
         } catch (IOException e) {
             socketResponseHandler.ioException();
         }
