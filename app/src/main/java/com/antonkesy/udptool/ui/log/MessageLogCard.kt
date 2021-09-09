@@ -62,15 +62,15 @@ fun MessageLogItem(message: ILogMessage, viewModel: MessageLogViewModel) {
                 .padding(start = 10.dp)
         )
         when (message) {
-            is DeviceLogMessage -> DeviceLogMessageContent(message = message, viewModel = viewModel)
-            is SocketLogMessage -> SocketLogMessageContent(message = message, viewModel = viewModel)
-            is MessageLog -> MessageLogMessageContent(message = message, viewModel = viewModel)
+            is DeviceLogMessage -> DeviceLogMessageContent(message = message)
+            is SocketLogMessage -> SocketLogMessageContent(message = message)
+            is MessageLog -> MessageLogMessageContent(message = message)
         }
     }
 }
 
 @Composable
-fun SocketLogMessageContent(message: SocketLogMessage, viewModel: MessageLogViewModel) {
+fun SocketLogMessageContent(message: SocketLogMessage) {
     Text(
         text = message.info,
         textAlign = TextAlign.Start,
@@ -82,7 +82,7 @@ fun SocketLogMessageContent(message: SocketLogMessage, viewModel: MessageLogView
 }
 
 @Composable
-fun MessageLogMessageContent(message: MessageLog, viewModel: MessageLogViewModel) {
+fun MessageLogMessageContent(message: MessageLog) {
     Text(
         text = getDataAsASCIIString(message.data),
         textAlign = TextAlign.Start,
@@ -95,7 +95,7 @@ fun MessageLogMessageContent(message: MessageLog, viewModel: MessageLogViewModel
 
 
 @Composable
-fun DeviceLogMessageContent(message: DeviceLogMessage, viewModel: MessageLogViewModel) {
+fun DeviceLogMessageContent(message: DeviceLogMessage) {
     Text(
         text = message.info,
         textAlign = TextAlign.Start,
