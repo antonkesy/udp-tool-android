@@ -9,7 +9,8 @@ import java.util.*
 
 fun isLegalIP(value: String): Boolean {
     try {
-        return Inet4Address.getByName(value).hostAddress.equals(value)
+        val hostAddress = Inet4Address.getByName(value).hostAddress ?: return false
+        return hostAddress == value
     } catch (e: Exception) {
     }
     return false
