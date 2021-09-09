@@ -53,7 +53,7 @@ fun MessagesCardContent(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             NumberOutlinedTextField(
-                "Timeout",
+                "Response timeout",
                 modifier = Modifier.weight(1.0f),
                 isActive = isTimeOut && isMsg,
                 value = logViewModel.timeOutTime.value.toString(),
